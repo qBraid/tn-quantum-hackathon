@@ -22,7 +22,7 @@
    - team name
    - slides link
    - video link
-   - one team member's qBraid email, so we can send the prize
+   - your email: use the one on your qBraid account, so the prize reaches you. The form emails you a copy of your entry, with a link to edit it
 
    Set both links to "anyone with the link can view". You can edit your entry until the deadline.
 
