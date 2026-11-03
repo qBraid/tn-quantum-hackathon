@@ -63,7 +63,7 @@ Run `python check.py` for a short demo.
 | 3 | Code the quantum cost function | 1 to 2 h | One hour's problem is 5 on/off qubits plus 3 helper (slack) qubits for the safety-margin rule. Write the plant costs (TODO 2) and the QUBO (TODO 3). Check it with the checker. | Its cheapest answer matches the best choice for that hour (the checker prints "Match!"). |
 | 4 | Run it hour by hour | 4 to 5 h | QAOA for each hour on the simulator, carrying results forward. Startup costs and min on/off times are checked classically. Then tune: layers, shots, penalty weight, warm starts. | You have the daily cost vs the baseline and a table of any rules broken. |
 | 5 | IonQ hardware run | ~2 h, by Sat 9 PM | One hour's 8-qubit problem at 100 to 200 shots, after tuning on IonQ's free noise simulator. | You have the job ID and a chart comparing hardware vs simulator. |
-| 6 | Tell the story | ~2 h | The cost gap, how often answers were valid, time including the hardware queue, and what would have to change for quantum to help. | Your write-up or slides are done. |
+| 6 | Tell the story | ~2 h | The cost gap, how often answers were valid, time including the hardware queue, and what would have to change for quantum to help. | You can walk a judge through your results in 5 minutes. |
 
 Words you will meet:
 - **QUBO**: a cost function over 0/1 variables with only single and pair terms. QAOA needs the problem in this form.
@@ -72,10 +72,15 @@ Words you will meet:
 
 ## What to submit (by Sunday 9:00 AM)
 
-1. Your notebook (`starter.ipynb` with your code and outputs).
-2. A milestone checklist with your job IDs.
-3. A short write-up or up to 5 slides, for when judges visit your team.
-4. A 5-line AI log: what you asked AI tools, what helped, and what you checked yourself.
+**Your notebook:** `starter.ipynb` with your code and outputs, and your IonQ job IDs.
+
+### For the judges' visit and the finalist deck
+
+Judges visit your team on Sunday morning, and selected teams present a 5-slide deck at the closing ceremony (see the [main README](../README.md#judging-and-the-finalist-deck)). Have these ready either way:
+
+- **Solution:** your daily cost against the MILP baseline and the cheapest-first rule, how often your answers were valid, any rules broken, and the hardware result next to the simulator.
+- **Customer and Value Proposition:** what a utility like TVA would gain (or not) from your approach, including time spent waiting in the hardware queue.
+- **What We Learned:** where quantum honestly stands on this problem (see below).
 
 ## Hardware rules
 
@@ -83,7 +88,7 @@ Words you will meet:
 - Tune on the simulator first. Practice on IonQ's free simulator, `ionq:ionq:sim:simulator` with `noise_model` `aria-1` (the notebook's hardware cell is set up for this).
 - Run only your final, tuned circuit on hardware. At most 200 shots per hardware run.
 - Hardware runs close **Saturday 9 PM**.
-- A stuck queue never costs points: your job ID plus the noisy-simulator result counts in full.
+- If IonQ is down or the queue isn't moving, keep your job ID and your noisy-simulator result to show judges, and ask a qBraid mentor about IQM Garnet (`aws:iqm:qpu:garnet`) as a backup.
 - The notebook prints your circuit's two-qubit gate count. IonQ advises keeping hardware circuits to a few dozen two-qubit gates, so use one QAOA layer (`p=1`) on hardware.
 
 ## Stretch goals (pick any)

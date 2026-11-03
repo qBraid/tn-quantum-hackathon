@@ -19,7 +19,7 @@ Stuck on any step? Flag a qBraid mentor right away.
 |---|---|---|
 | [`qrng_randomness.ipynb`](./qrng_randomness.ipynb) | **Randomness You Can Trust:** a quantum random number generator compared with software randomness | 15 min for the setup check |
 | [`grover_find_the_fault.ipynb`](./grover_find_the_fault.ipynb) | **Find the Fault:** Grover's search finds one faulted node among N in about √N steps | 30 to 60 min |
-| [`qaoa_islanding.ipynb`](./qaoa_islanding.ipynb) | **Islanding the Grid:** QAOA splits a grid in two (Max-Cut). **Recommended before either TVA track**, which both use QAOA | About 1 hour |
+| [`qaoa_islanding.ipynb`](./qaoa_islanding.ipynb) | **Islanding the Grid:** QAOA splits a grid in two (Max-Cut). Not part of the setup check: it's the worked QAOA example for **both TVA tracks**, so open it once you've picked one | About 1 hour |
 
 ## Using AI
 

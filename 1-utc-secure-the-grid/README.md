@@ -54,7 +54,8 @@ Now put it together. Securing a metro-scale grid network takes more than one too
 |---|---|---|
 | IonQ simulator | `ionq:ionq:sim:simulator` | **Free.** Use `noise_model="aria-1"` to mimic hardware |
 | IonQ Forte | `ionq:ionq:qpu:forte-1` | Real QPU. Uses credits |
-| Quantinuum | Posted in Discord once access opens | To use it, create a Quantinuum account and accept its terms when qBraid prompts you (under a minute) |
+| Quantinuum | Posted in Discord once access opens | You'll get an invite to Quantinuum's Nexus portal. Accept it and its terms before Saturday, then run through qBraid |
+| IQM Garnet | `aws:iqm:qpu:garnet` | Backup if IonQ is down or its queue isn't moving. Ask a qBraid mentor first |
 
 Rules:
 - Get it right on a simulator first.
@@ -64,10 +65,9 @@ Rules:
 
 ## What to submit (by Sunday 9:00 AM)
 
-1. **Your notebooks**, with code that runs.
-2. **A write-up** answering each Part. Label your answers by step and Part (for example, "Step 1, Part 3") so judges can follow along.
-3. **Your hardware job IDs.**
-4. **A short AI log** (about 5 lines): what you asked AI to do, what it got wrong and how you caught it.
+1. **Your notebooks**, with code that runs and your hardware job IDs.
+2. **Written answers** to each Part. Label them by step and Part (for example, "Step 1, Part 3") so judges can follow along.
+Judges visit your team on Sunday morning, and selected teams present a 5-slide deck at the closing ceremony (see the [main README](../README.md#judging-and-the-finalist-deck)). In that deck, your network design from Step 3 is the Solution, and the utility is the Customer.
 
 Judges look for three things: does it work, do you understand why it works, and can you explain it to someone who isn't an expert. A design that uses only post-quantum cryptography can score just as well as one with QKD everywhere, if you justify it.
 

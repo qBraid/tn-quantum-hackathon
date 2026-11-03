@@ -22,7 +22,7 @@ The qBraid Award goes to the team that makes the most creative use of [qBraid](h
 ## The slides
 
 1. **qBraid features we used.** Keep a tile for each feature you used, add a line on how, and delete the rest.
-2. **Our best qBraid moment.** One chart or screenshot, what it shows, and where AI helped.
+2. **Our best qBraid moment.** One visual (a chart, a screenshot of your interactive view, or a frame from your game), what it shows, and where AI helped.
 3. **Check it (optional).** Job IDs, links and cost.
 
 Here's a [finished example](./qbraid-award-example.pptx) ([PDF](./qbraid-award-example.pdf)). The team is made up and the numbers are illustrative.
@@ -46,7 +46,7 @@ A screen recording, with someone on your team talking. It doesn't need editing.
 |---|---|
 | 0:00 to 0:30 | Your team, your track, and what you built |
 | 0:30 to 3:00 | **qBraid doing the work, on screen:** your notebook running in qBraid Lab, a job going to a simulator or quantum hardware, results coming back on the Jobs page |
-| 3:00 to 4:30 | Your best result, plus where AI helped and where you stepped in |
+| 3:00 to 4:30 | Your best result or visualization, plus where AI helped and where you stepped in |
 | Last 30 seconds | What you'd try next |
 
 **One rule:** we have to *see* it run on qBraid.
@@ -58,6 +58,10 @@ A screen recording, with someone on your team talking. It doesn't need editing.
 
 ## Ideas
 
+- **Make it visual (we'd love to see this).** Turn your results into something people can see and play with: an interactive view of your grid, an animation of QAOA converging, a live dashboard, even a game.
+  - **For inspiration:** [Quantum Runner](https://account.qbraid.com/explore/projects/q-ready-quantum-runner-2gkzz6) on qBraid's Explore page is a side-scroller where a real quantum measurement decides where the gaps go.
+  - **How:** build yours as one self-contained HTML file, then open it next to your notebook in qBraid Lab's Agent Canvas panel with `qbraid-canvas your-file.html --title "Our project"`. AI assistants are great at building these.
+- **Share it on Explore.** Put your project in a GitHub repo and submit it from qBraid's Explore page, so anyone can launch it in qBraid Lab with one click.
 - **Real hardware.** Run your track's problem on IonQ or Quantinuum, and compare it with the simulator.
 - **qBraid AI (encouraged).**
   - Ask [AI Chat](https://docs.qbraid.com/v2/ai/user-guide/overview) to compare devices or explain a result.
@@ -74,7 +78,7 @@ A screen recording, with someone on your team talking. It doesn't need editing.
 qBraid staff watch every video after the deadline, with your slides open, separately from track judging.
 
 1. **Did it clearly run on qBraid?** If not, the entry is out.
-2. **How creatively did you use it?** Scored 1 to 5.
+2. **How creatively did you use it?** Scored 1 to 5. A creative visualization (an interactive view, an animation or a game built on your results), several features used well, or a clever use of AI all push the score up.
 
 We re-watch the top two and pick the winner. Spending more credits doesn't help: a careful, cheap hardware run beats an expensive one.
 
