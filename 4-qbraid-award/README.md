@@ -5,7 +5,7 @@
 | | |
 |---|---|
 | **What you send** | 2 or 3 slides from the template in this folder, plus a 3 to 5 minute screen recording |
-| **Where** | The entry form pinned in Discord |
+| **Where** | [The entry form](https://docs.google.com/forms/d/e/1FAIpQLSd21CqFVOQMGThTrO9gNsoffqMhMJqpvb9zndlQYIqMfzc_dw/viewform) (also pinned in Discord) |
 | **When** | By **Sunday 9:00 AM**, with your final project materials |
 | **Prize** | $200 in gift cards split across the winning team, plus qBraid credits for each member. Announced at the closing ceremony |
 | **Judged on** | Did it run on qBraid, and how creatively did you use it? |
@@ -18,7 +18,7 @@
    - **Open it:** PowerPoint, Keynote or Google Slides all work. For Google Slides, upload it to Drive, then open it with Google Slides.
    - **Fill it in:** every slide tells you what to write. The speaker notes tell you what to say in your video.
 3. **Record your screen (10 minutes).** Walk through your slides, then show qBraid running. Use the [script below](#the-video-script).
-4. **Fill in the entry form (2 minutes).** Use the form pinned in Discord and enter:
+4. **Fill in the [entry form](https://docs.google.com/forms/d/e/1FAIpQLSd21CqFVOQMGThTrO9gNsoffqMhMJqpvb9zndlQYIqMfzc_dw/viewform) (2 minutes).** It's also pinned in Discord. Enter:
    - team name
    - slides link
    - video link
