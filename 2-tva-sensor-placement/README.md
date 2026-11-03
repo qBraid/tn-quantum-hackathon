@@ -1,0 +1,90 @@
+# Grid Sensor Placement (TVA)
+
+**Sponsor:** TVA (Tennessee Valley Authority) · **Platform:** qBraid · **Hardware:** IonQ Forte
+
+## The problem
+
+TVA's grid is a network of substations joined by power lines. A PMU (phasor measurement unit) is a sensor that takes time-synchronized measurements, so operators can tell what state the grid is in. A PMU at a substation sees that substation and every substation directly connected to it.
+
+PMUs are expensive. **What is the smallest set of substations that lets operators see every substation?**
+
+**Everyday version:** put security cameras at intersections so that every intersection is visible from at least one camera. Computer scientists call this the *minimum dominating set* problem. It maps naturally onto qubits: one qubit per substation, where 1 means "put a sensor here".
+
+## Start here
+
+1. Open `starter.ipynb` in qBraid Lab with the qBraid SDK environment's kernel.
+2. Run the cells from the top.
+3. Do the TODOs (there are 3). Each one has a hint.
+
+Optional QAOA primer: `../0-warm-up/qaoa_islanding.ipynb`.
+
+## The data
+
+| File | What it is |
+|---|---|
+| `data/ieee14.json` | IEEE 14-bus test grid: 14 substations, 20 lines. The main grid. |
+| `data/ieee14_piece6.json` | A 6-substation piece of it, small enough for quantum hardware |
+| `data/ieee30.json` | IEEE 30-bus test grid, for the stretch goal |
+
+A *bus* is a substation. Each file lists the buses, the lines, the zero-injection buses (see stretch goals), the power plant buses and each bus's load. See `data/README.md` for sources.
+
+`check.py` checks any placement: is it valid, which substations are unseen, how sturdy it is, and (for grids of 20 buses or fewer) how far it is from the fewest possible. Run `python check.py` for a demo.
+
+## Milestones
+
+| # | Milestone | Time | What you do | Done when |
+|---|---|---|---|---|
+| 1 | Understand it | about 1 h | Draw the grid and place sensors by hand | you have a placement and one sentence on what a PMU sees |
+| 2 | Classical baseline | 2 to 3 h | A greedy rule and an exact integer program | you have the optimal count and its runtime |
+| 3 | Code the quantum cost function | 1 to 2 h | The number of sensors plus a large penalty for every unseen substation. Check it with the checker on the 6-substation piece. | its cheapest answer matches the integer program |
+| 4 | Run QAOA | 3 to 4 h | On the simulator: first the 6-substation piece, then all 14 | you have a chart of how often QAOA finds an optimal placement and how often it leaves a substation unseen |
+| 5 | IonQ hardware run | about 2 h, by **Sat 9 PM** | The 6-substation piece at 100 to 200 shots, after tuning on IonQ's free noise simulator | you have the job ID and a chart comparing hardware with the simulator |
+| 6 | Tell the story | about 2 h | What the sensors cost, what an operator gains, and where quantum honestly stands | your write-up or slides are done |
+
+Why a 6-substation piece for hardware: the full 14-substation QAOA circuit needs over 300 two-qubit gates, far more than today's hardware runs well. The piece needs a few dozen.
+
+## What to submit (by Sunday 9:00 AM)
+
+1. **Your notebook:** `starter.ipynb` with the TODOs done, run top to bottom.
+2. **A milestone checklist:** the 6 milestones above, each marked done or not, with your IonQ job IDs.
+3. **A short write-up or up to 5 slides**, for when judges visit your team. Cover:
+   - your sensor locations, the sensor count and the coverage (from `check_placement`)
+   - what happens if one sensor fails (`breaks_if_lost`, or the N-1 check)
+   - greedy vs integer program vs QAOA: count, runtime, how often QAOA finds the best answer
+   - the hardware result next to the simulator
+   - what a sensor costs and what an operator gains. A 2014 U.S. Department of Energy report, [Factors Affecting PMU Installation Costs](https://www.energy.gov/oe/articles/factors-affecting-pmu-installation-costs-october-2014), is a good starting point for costs.
+4. **A 5-line AI log:** what you asked your AI assistant, what you kept, and what you had to fix.
+
+## Hardware rules
+
+- **Tune on simulators first:** the local Aer simulator, then IonQ's free noise simulator (`ionq:ionq:sim:simulator` with `noise_model="aria-1"`). The notebook's hardware cell is set up for this.
+- **Real hardware is IonQ Forte** (`ionq:ionq:qpu:forte-1`) through qBraid. Run only your final, tuned circuit.
+- **Cap every hardware run at 200 shots.**
+- **Hardware runs close Saturday 9 PM.**
+- **A stuck queue never costs points.** A job ID plus your noisy-simulator result counts in full.
+- Keep the hardware circuit to a few dozen two-qubit gates. The notebook prints the count.
+
+## Stretch goals (pick any)
+
+- **Zero-injection buses.** A zero-injection bus has no load and no generator, so the power flowing in equals the power flowing out. That lets operators work out one unseen neighbor without a sensor. IEEE 14 bus 7 is one. Use `check_placement(grid, chosen, zib=True)`. How many sensors does the rule save?
+- **N-1 (every substation seen twice).** The grid stays fully visible if any one sensor fails. Use `check_placement(grid, chosen, n1=True)` and `ilp_placement(grid, twice=True)`. For QAOA, add a penalty for each substation seen only once.
+- **Priority weights.** Some substations matter more (big loads, power plants). Give them a bigger penalty, or require them to be seen twice, and see how the placement changes.
+- **30 substations on qBraid's GPU simulator.** Load `data/ieee30.json`. The exact table of 2^30 costs no longer fits in memory, so switch to sampled shots.
+
+## Honest quantum value
+
+Classical solvers handle grids this size instantly: the integer program in the notebook finds the best placement for 14 substations in milliseconds. In a 2020 study (Jones et al., [arXiv 2001.04489](https://arxiv.org/abs/2001.04489)), a D-Wave quantum annealer matched the best placement on grids up to 30 substations and fell short at 39 and 57.
+
+So quantum computers do not beat classical methods on this problem today. The learning is in building and testing the whole pipeline: turning a grid rule into a cost function, then a circuit, then running it on a simulator and on real hardware, and comparing it honestly with classical methods. Say this plainly in your slides.
+
+## Links
+
+- MATPOWER IEEE 14-bus case: <https://github.com/MATPOWER/matpower/blob/master/data/case14.m>
+- MATPOWER IEEE 30-bus case: <https://github.com/MATPOWER/matpower/blob/master/data/case_ieee30.m>
+- UW Power Systems Test Case Archive (the original IEEE cases): <https://labs.ece.uw.edu/pstca/>
+- Background reading from TVA: NERC's "Reliability Guideline: PMU Placement"
+- Jones et al. 2020, quantum annealing for PMU placement: <https://arxiv.org/abs/2001.04489>
+
+## The qBraid Award
+
+The qBraid Award is open to every team. It's optional; see `../4-qbraid-award/`.

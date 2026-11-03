@@ -1,0 +1,9 @@
+{
+ "name": "IEEE 14-bus",
+ "source": "MATPOWER case14.m (https://github.com/MATPOWER/matpower/blob/master/data/case14.m), converted from the public IEEE Common Data Format file in the UW Power Systems Test Case Archive (https://labs.ece.uw.edu/pstca/).",
+ "buses": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
+ "lines": [[1, 2], [1, 5], [2, 3], [2, 4], [2, 5], [3, 4], [4, 5], [4, 7], [4, 9], [5, 6], [6, 11], [6, 12], [6, 13], [7, 8], [7, 9], [9, 10], [9, 14], [10, 11], [12, 13], [13, 14]],
+ "zero_injection": [7],
+ "generator_buses": [1, 2, 3, 6, 8],
+ "load_mw": {"1": 0, "2": 21.7, "3": 94.2, "4": 47.8, "5": 7.6, "6": 11.2, "7": 0, "8": 0, "9": 29.5, "10": 9, "11": 3.5, "12": 6.1, "13": 13.5, "14": 14.9}
+}
