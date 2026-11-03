@@ -14,6 +14,23 @@ What drives the choices:
 - **Peakers** (small gas or oil turbines) start fast but cost more per MWh.
 - Every plant that is on also pays a **no-load cost** per hour, just for running.
 
+## Background from TVA
+
+TVA shared an overview of how utilities make these decisions. The short version:
+
+1. **Forecast** load, wind and solar.
+2. **Set the requirements:** the energy needed each hour, plus reserves for surprises.
+3. **Commit:** choose which units are on.
+4. **Dispatch** the committed units, cheapest first.
+5. **Check the grid can carry it.**
+6. **Re-optimize** as conditions change.
+
+The cost TVA cares about is the whole day's: fuel, startups, no-load and operating costs. It isn't just the cost of the next megawatt.
+
+In TVA's example of loading the cheapest units first, the order is wind ($0/MWh), nuclear ($10), coal ($25), then gas combined cycle ($40). Gas is the *marginal* unit, the one that sets the price, because it supplies the last megawatts needed.
+
+TVA also pointed teams to RTS-GMLC as the best open data for this. Use its source CSV files and hourly time series for day-long schedules. Its MATPOWER file is a single peak-hour snapshot with renewables switched off. Our `data/` files come from those CSVs.
+
 ## Everyday version
 
 A pizzeria with several ovens. Big ovens are cheap per pizza but take hours to preheat and must stay on once lit. Small ovens heat instantly but cost more per pizza. You plan tomorrow's ovens against an hourly order forecast plus a buffer.
@@ -97,6 +114,7 @@ Judges visit your team on Sunday morning, and selected teams present a 5-slide d
 - **Two hours at once.** Put two consecutive hours in one QUBO (16 qubits, more with 10 plants) so QAOA can see startup costs across hours. Bigger versions need qBraid's GPU simulator.
 - **Ramp limits.** `solve_milp(..., ramps=True)` and `check_schedule(..., ramps=True)` add them. The RTS-GMLC ramp rates are generous for 1-hour steps, so try tightening them and see what changes.
 - **A battery.** Add a storage unit (charge, discharge, state of charge) to the MILP, then decide how it would enter your hour-by-hour loop.
+- **Wind and solar.** Subtract RTS-GMLC's hourly wind and solar output from demand to get *net load*, then schedule against that. TVA's overview flags the evening ramp, when solar fades, as a growing challenge.
 - **Drop the helper qubits.** Replace the slack penalty with a penalty-only formulation (search "unbalanced penalization QAOA"). Compare qubits, two-qubit gates and how often answers are valid.
 - **A better hour cost.** TODO 2's cost is an approximation. Improve it and measure how often the QUBO's best matches the exact best.
 
@@ -122,7 +140,8 @@ A team that says so, and shows where its hybrid approach lost cost or broke a ru
 
 ## Links
 
-- RTS-GMLC test system: https://github.com/GridMod/RTS-GMLC
+- RTS-GMLC test system: https://github.com/GridMod/RTS-GMLC (TVA's recommended data; see also the [Reliability Test System page](https://www.nlr.gov/grid/reliability-test-system))
+- Smaller MATPOWER instances TVA suggested, such as `case24_ieee_rts`: https://matpower.app/manual/matpower/ExamplematpowerCases.html
 - Koretsky et al., "Adapting Quantum Approximation Optimization Algorithm (QAOA) for Unit Commitment", 2021: https://arxiv.org/abs/2110.12624
 - QAOA primer (optional): `../0-warm-up/qaoa_islanding.ipynb`
 - The qBraid Award is open to every team (optional): `../4-qbraid-award/`

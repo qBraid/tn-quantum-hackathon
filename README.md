@@ -15,7 +15,7 @@ Everything runs in qBraid Lab in your browser. There's nothing to install.
 
 ## The tracks
 
-Each team works on one track. Tracks are revealed and chosen on Friday at 7:00 PM, and each track has its own judges.
+Each team works on one track. Tracks are revealed and chosen on Friday at 7:00 PM. Each track takes up to 5 teams and has its own judges.
 
 | Folder | Track | The question | Hardware | Good fit for |
 |---|---|---|---|---|
@@ -33,6 +33,10 @@ Every track folder has a `README.md` with the problem, milestones and track-spec
 | Fri 7:00 PM | Tracks revealed; teams choose |
 | Fri 7:30 PM | Warm-up ([`0-warm-up`](./0-warm-up)) |
 | Fri 8:00 PM | Hacking starts |
+| Sat 12:20 PM | TVA spotlight and career tables (lunch) |
+| Sat 1:30 PM | Quantinuum technical session |
+| Sat 3:30 PM | CO.LAB session: pitching your project (optional, useful for the finalist deck) |
+| Sat 7:00 PM | qBraid tests the submission portal with teams |
 | **Sat 9:00 PM** | **Last hardware runs.** Queues can take hours, so send yours earlier |
 | **Sun 9:00 AM** | **Hard deadline** for final project materials |
 | Sun 10:30 AM | Judges come around and talk with each team |

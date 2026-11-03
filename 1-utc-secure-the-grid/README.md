@@ -59,7 +59,7 @@ Now put it together. Securing a metro-scale grid network takes more than one too
 
 Rules:
 - Get it right on a simulator first.
-- Cap each hardware run at 200 shots.
+- Cap each hardware run at 200 shots, and plan on one hardware run for each Part that asks for one (UTC's guidance). Simulators are free and unlimited.
 - Last hardware runs: **Saturday 9:00 PM**.
 - Write down every job ID.
 

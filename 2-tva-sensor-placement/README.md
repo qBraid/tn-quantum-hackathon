@@ -10,6 +10,14 @@ PMUs are expensive. **What is the smallest set of substations that lets operator
 
 **Everyday version:** put security cameras at intersections so that every intersection is visible from at least one camera. Computer scientists call this the *minimum dominating set* problem. It maps naturally onto qubits: one qubit per substation, where 1 means "put a sensor here".
 
+## Background from TVA
+
+TVA shared NERC's *Reliability Guideline: PMU Placement and Installation* (December 2016) as background for this track. Three ideas from it shape the problem:
+
+1. **There are two ways to state the goal.** You can find the fewest PMUs that make the whole grid observable, which is milestones 2 to 5. Or you can find the most observability you can get from a fixed number of PMUs, which is the "fixed budget" stretch goal.
+2. **Losing one PMU, or its data feed, can leave part of the grid unseen.** That's why utilities plan for redundancy, which is the N-1 stretch goal.
+3. **Utilities don't treat every substation the same.** They score each candidate location by how many monitoring applications a PMU there would serve, such as state estimation, oscillation monitoring and angle monitoring, with a weight for each application. That's the priority-weights stretch goal.
+
 ## Start here
 
 1. Open `starter.ipynb` in qBraid Lab with the qBraid SDK environment's kernel.
@@ -68,7 +76,8 @@ Judges visit your team on Sunday morning, and selected teams present a 5-slide d
 
 - **Zero-injection buses.** A zero-injection bus has no load and no generator, so the power flowing in equals the power flowing out. That lets operators work out one unseen neighbor without a sensor. IEEE 14 bus 7 is one. Use `check_placement(grid, chosen, zib=True)`. How many sensors does the rule save?
 - **N-1 (every substation seen twice).** The grid stays fully visible if any one sensor fails. Use `check_placement(grid, chosen, n1=True)` and `ilp_placement(grid, twice=True)`. For QAOA, add a penalty for each substation seen only once.
-- **Priority weights.** Some substations matter more (big loads, power plants). Give them a bigger penalty, or require them to be seen twice, and see how the placement changes.
+- **Fixed budget.** With only *k* sensors (try k = 2 or 3 on IEEE 14), place them to see as many substations as possible. This is the second goal in NERC's guideline. How does the cost function change when you can't afford full coverage?
+- **Priority weights.** Some substations matter more, such as big loads, power plants and the links between regions. Build a small priority table the way NERC's guideline suggests (a weight per application, times whether a PMU at that bus serves it), then give high-priority buses a bigger penalty or require them to be seen twice. See how the placement changes.
 - **30 substations on qBraid's GPU simulator.** Load `data/ieee30.json`. The exact table of 2^30 costs no longer fits in memory, so switch to sampled shots.
 
 ## Honest quantum value
@@ -82,7 +91,11 @@ So quantum computers do not beat classical methods on this problem today. The le
 - MATPOWER IEEE 14-bus case: <https://github.com/MATPOWER/matpower/blob/master/data/case14.m>
 - MATPOWER IEEE 30-bus case: <https://github.com/MATPOWER/matpower/blob/master/data/case_ieee30.m>
 - UW Power Systems Test Case Archive (the original IEEE cases): <https://labs.ece.uw.edu/pstca/>
-- Background reading from TVA: NERC's "Reliability Guideline: PMU Placement"
+- Background reading from TVA: NERC's *Reliability Guideline: PMU Placement and Installation* (December 2016)
+- Data sources TVA pointed to:
+  - an [IEEE overview of PMU placement](https://ieeexplore.ieee.org/document/7459248)
+  - [IEEE 14-bus PMU measurements at optimal and sub-optimal locations](https://ieee-dataport.org/documents/pmu-measurements-optimal-sub-optimal-locations-ieee-14-bus-system) (IEEE DataPort)
+  - the larger MATPOWER cases (57, 118 and 300 buses) in the [MATPOWER data folder](https://github.com/MATPOWER/matpower/tree/master/data)
 - Jones et al. 2020, quantum annealing for PMU placement: <https://arxiv.org/abs/2001.04489>
 
 ## The qBraid Award
