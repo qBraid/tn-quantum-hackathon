@@ -4,7 +4,7 @@
 
 | | |
 |---|---|
-| **What you send** | 2 or 3 slides from the template in this folder, a 3 to 5 minute screen recording, and a link to your [qBraid artifact](#make-it-visual-in-one-line) if you made a visual |
+| **What you send** | 3 slides from the template in this folder, a 3 to 5 minute screen recording, and a link to your [qBraid artifact](#make-it-visual-in-one-line) if you made a visual |
 | **Where** | [The entry form](https://docs.google.com/forms/d/e/1FAIpQLSeeom5YX0jADpt1a09Xox9EUQYPtJYoaggeVy-1iX4VT3yY9g/viewform) (also pinned in Discord) |
 | **When** | By **Sunday 9:00 AM**, with your final project materials |
 | **Prize** | $200 in gift cards split across the winning team, plus qBraid credits for each member. Announced at the closing ceremony |
@@ -66,26 +66,13 @@ For inspiration, see [Quantum Runner](https://account.qbraid.com/explore/project
 
 ## The slides
 
-Keep 2 or 3 slides. Each one has instructions on it: replace the bracketed text, and delete what you don't use.
+One file, three slides: [`qbraid-award-template.pptx`](./qbraid-award-template.pptx). Replace the bracketed text. The speaker notes on each slide are your video script.
 
 | Slide | What goes on it |
 |---|---|
-| 1. **qBraid features we used** | One tile for each feature you used, with a line on how. Delete the rest |
-| 2. **Our best qBraid moment** | One visual (a chart, your interactive view, or a frame from your game), what it shows, and where AI helped |
-| 3. **Check it** (optional) | Job IDs, links and what your credits went to |
-
-Here's a [finished example](./qbraid-award-example.pptx) ([PDF](./qbraid-award-example.pdf)). The team is made up and the numbers are illustrative.
-
-![Example slide: qBraid features we used](./images/example-1.png)
-
-<details>
-<summary>Example slides 2 and 3</summary>
-
-![Example slide 2: Our best qBraid moment](./images/example-2.png)
-
-![Example slide 3: Check it](./images/example-3.png)
-
-</details>
+| 1. **The problem** | Team name, track and members. Your track's challenge in one or two plain sentences, who it matters to, and what you built |
+| 2. **How we used qBraid** | One row per qBraid feature: what it did for your challenge, and the evidence (devices and job IDs, GPU, AI, artifact link). Delete the rows you didn't use |
+| 3. **What we built and found** | One big visual (a chart, your tool, or a screenshot of your qBraid artifact), the result in plain words, what surprised you, what's next, and your artifact link |
 
 ## The video script
 
@@ -94,9 +81,9 @@ Record your screen with someone on the team talking, 3 to 5 minutes. One take is
 | Time | Show | Cover |
 |---|---|---|
 | 0:00 to 0:45 | Slide 1 | **The problem.** Your track's challenge in plain words, who it matters to (a grid operator, a utility, a security team) and what you built to tackle it. |
-| 0:45 to 3:15 | **qBraid doing real work, live:** your notebook or tool in qBraid Lab, a job on the Jobs page, your visual or artifact, a GPU run, the agent building something | **How you used qBraid for this problem, specifically.** For each feature: what you did, why it helped your challenge, and what happened. For example: "We sent our 6-substation circuit to IonQ Forte to see how hardware noise changes the placement. Here's the job, and here's how the answer shifted." |
-| 3:15 to 4:30 | Slide 3, or your visual running live | **What you found.** The result in plain words, what surprised you, and how AI helped (and where you checked it). |
-| Last 30 seconds | Slide 3, or just your face | **What's next.** What you'd try with more time. |
+| 0:45 to 3:15 | Slide 2, then **qBraid doing real work, live:** your notebook or tool in qBraid Lab, a job on the Jobs page, a GPU run, AI Chat or the agent building something, your artifact | **How you used qBraid for this problem, specifically.** For each row: what you did, why it helped your challenge, and the proof. For example: "We sent our 6-substation circuit to IonQ Forte to see how hardware noise changes the placement. Here's the job, and here's how the answer shifted." |
+| 3:15 to 4:30 | Your visual or tool running live, then slide 3 | **What you found.** The result in plain words, what you compared it with, and what surprised you. |
+| Last 30 seconds | Slide 3 | **What's next.** What you'd try with more time. |
 
 **One rule:** we have to *see* it run on qBraid.
 
