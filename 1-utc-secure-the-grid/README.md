@@ -10,13 +10,14 @@ These problems come from UTC (Problems 1, 3, 4 and 6 of its problem set).
 
 1. Open [`1_bb84_eavesdropper.ipynb`](./1_bb84_eavesdropper.ipynb) with the qBraid SDK environment's kernel and run the cells.
 2. Fill in the `TODO`s. Each one has a hint.
-3. Do the steps in order. Each one feeds the next.
+3. Split the team. Steps 1 and 2 don't depend on each other, so some of you can work on BB84 while others take Shor and Grover, and someone starts the written Parts. Step 3 brings it all together.
 
 | Step | Notebook | The question | Time |
 |---|---|---|---|
 | 1. Catch the eavesdropper | [`1_bb84_eavesdropper.ipynb`](./1_bb84_eavesdropper.ipynb) | Can two substations share a secret key, and spot a spy by the errors they cause? | 4 to 5 h |
-| 2. Size up the threat | [`2_shor_harvest_now.ipynb`](./2_shor_harvest_now.ipynb), then [`2b_grover_symmetric_keys.ipynb`](./2b_grover_symmetric_keys.ipynb) | How real and how urgent is "harvest now, decrypt later," and what should the utility fix first? | 5 to 6 h |
+| 2. Size up the threat | [`2_shor_harvest_now.ipynb`](./2_shor_harvest_now.ipynb), then [`2b_grover_symmetric_keys.ipynb`](./2b_grover_symmetric_keys.ipynb) | How real and how urgent is "harvest now, decrypt later," and what should the utility fix first? | 4.5 to 5.5 h |
 | 3. Design the network | [`3_secure_grid_link.ipynb`](./3_secure_grid_link.ipynb) | Where should the network use quantum keys, and where post-quantum cryptography? | 5 to 6 h |
+| 4. Tell the story | Your pitch deck | The problem, the customer, your design and its value, and what didn't work | about 2 h |
 
 ## Step 1: Catch the eavesdropper (BB84)
 
@@ -37,7 +38,7 @@ Much of today's security, including the grid's, relies on RSA and elliptic-curve
 - **Part 2. Hardware gap.** The notebook lists qBraid's real quantum computers. Record their qubit counts, estimate the order of magnitude of qubits needed to break RSA-2048, and state how big the gap is today.
 - **Part 3. Exposure map (written).** List the utility systems that rely on RSA or elliptic-curve cryptography, and so are exposed. Consider SCADA control links, remote-access VPNs and firmware-update signing.
 - **Part 4. Migration plan (written).** Propose a move to NIST's post-quantum standards: [ML-KEM (FIPS 203)](https://csrc.nist.gov/pubs/fips/203/final) for key exchange and [ML-DSA (FIPS 204)](https://csrc.nist.gov/pubs/fips/204/final) for signatures. Rank what the utility should fix first, and explain why.
-- **Part 5. Grover and symmetric keys.** Shor's algorithm breaks public-key encryption. Grover's search attacks symmetric encryption such as AES, because it searches keys in about the square root of the time. Build it in [`2b_grover_symmetric_keys.ipynb`](./2b_grover_symmetric_keys.ipynb) and run it for N = 4, 8 and 16, then on IonQ's free simulator. Then answer in a few sentences: what key length should the utility use for symmetric encryption, and why is that easier to fix than RSA? Fold it into your migration plan.
+- **Part 5. Grover and symmetric keys.** Shor's algorithm breaks public-key encryption. Grover's search attacks symmetric encryption such as AES, because it searches keys in about the square root of the time. Build it in [`2b_grover_symmetric_keys.ipynb`](./2b_grover_symmetric_keys.ipynb), where the marked item stands in for the secret key, and run it for N = 4 and 8 on the simulator (N = 16 and the IonQ run are optional). Then answer in a few sentences: what key length should the utility use for symmetric encryption, and why is that easier to fix than RSA? Fold it into your migration plan.
 - **Stretch.** Identify systems that are hard to patch, such as field devices with long lifespans, and explain why they need attention now.
 
 ## Step 3: Design the network (capstone)
@@ -45,7 +46,7 @@ Much of today's security, including the grid's, relies on RSA and elliptic-curve
 Now put it together. Securing a metro-scale grid network takes more than one tool. Some links may use QKD, others post-quantum cryptography (PQC). The right mix depends on distance, cost, the number of sites and hard practical limits.
 
 - **Part 1. Architecture.** A diagram and a written rationale showing where you use QKD and where PQC, and why. Address distance limits, the number of substations, the "trusted node" problem on long QKD links, and timing synchronization across sites.
-- **Part 2. Assumptions and tradeoffs.** List your key assumptions and tradeoffs. Back up every hardware limit with real numbers from qBraid's device list, not guesses.
+- **Part 2. Assumptions and tradeoffs.** List your key assumptions and tradeoffs. Use qBraid's device list for quantum-computer numbers (qubit counts, prices), and cite a source for QKD limits such as distance and key rate.
 - **Part 3. Working prototype.** Build and run one link on qBraid: reuse your BB84 from Step 1, or finish the teleportation link in the notebook (its last cell runs it on IonQ's free simulator).
 - **Part 4. Rollout plan.** A phased plan: what the utility deploys first, next and later, and why.
 - **Stretch.** A short cost-versus-security argument aimed at the utility's board.
@@ -57,7 +58,7 @@ Now put it together. Securing a metro-scale grid network takes more than one too
 |---|---|---|
 | IonQ simulator | `ionq:ionq:sim:simulator` | **Free.** Pass `runtime_options={"noise_model": "aria-1"}` to add IonQ's gate noise (see the notebooks' hardware cell) |
 | IonQ Forte | `ionq:ionq:qpu:forte-1` | Real QPU. Uses credits |
-| Quantinuum | On the Quantinuum page under Devices in your qBraid account | Accept Quantinuum's terms there once (you'll see a prompt), then run through qBraid. Until you accept, Quantinuum jobs are refused |
+| Quantinuum emulators | `quantinuum:quantinuum:sim:h2-emulator` (also `h2-1le`, `h1-emulator`, `h1-1le`) | Emulators that model Quantinuum's hardware, not the real machine; check the price in the device catalog. Accept Quantinuum's terms once on the Quantinuum page under Devices (you'll see a prompt); until you accept, jobs are refused. Your real-hardware run is on IonQ Forte |
 | IQM Garnet | `aws:iqm:qpu:garnet` | Backup if IonQ is down or its queue isn't moving. Ask a qBraid mentor first |
 
 Rules:
@@ -76,7 +77,7 @@ On Sunday morning, you present your pitch deck to this track's judges. They look
 
 A design that uses only post-quantum cryptography can score just as well as one with QKD everywhere, if you justify it. Code counts less than understanding and clarity. See the [main README](../README.md#what-judges-look-for).
 
-**Due Sunday 9:00 AM:** your pitch deck and your code as a ZIP ([what to submit, and where](../README.md#what-to-submit)). Have your notebooks, any tools you built, your hardware job IDs, and your written answers to each Part, labeled by step and Part (for example, "Step 1, Part 3").
+**Due Sunday 9:00 AM:** your pitch deck and your code as a ZIP ([what to submit, and where](../README.md#what-to-submit)). Have your notebooks, any tools you built, your hardware job IDs, and your written answers to each Part in a `WRITEUP.md` file in this folder (it goes in your ZIP), labeled by step and Part (for example, "Step 1, Part 3").
 
 **The notebooks are starters.** Add your own code, cells and notebooks, and expand as far as you like. The stretch goals above show some ways to bring in ideas from the warm-up and the other tracks.
 

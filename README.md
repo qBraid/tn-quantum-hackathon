@@ -9,17 +9,17 @@ Everything runs in qBraid Lab in your browser. There's nothing to install on you
 ## Start here (Friday evening)
 
 1. **Join the hackathon's qBraid organization** with the invite link pinned in Discord. That's where your team's credits come from.
-2. **Do the warm-up,** Friday 7:30 to 8:15 PM. It lives in its own repository, [tn-quantum-hackathon-warmup](https://github.com/qBraid/tn-quantum-hackathon-warmup) ([launch it on qBraid](https://account.qbraid.com?gitHubUrl=https://github.com/qBraid/tn-quantum-hackathon-warmup.git)). It isn't scored. It makes sure your account, credits and hardware access all work before hacking starts.
-3. **Open this repository in qBraid Lab** once teams are announced (8:15 PM), with the button above or from the Explore page in your qBraid account.
+2. **Do the warm-up,** Friday 7:30 to 8:15 PM. It lives in its own repository, [tn-quantum-hackathon-warmup](https://github.com/qBraid/tn-quantum-hackathon-warmup) ([launch it on qBraid](https://account.qbraid.com?gitHubUrl=https://github.com/qBraid/tn-quantum-hackathon-warmup.git)). It isn't scored. It makes sure your account works and your first qBraid job runs before hacking starts.
+3. **Open this repository in qBraid Lab** once track assignments are announced (8:15 PM), with the button above or from the Explore page in your qBraid account.
 4. **Pick the kernel.** Use the qBraid SDK environment's kernel for every notebook here (Kernel > Change Kernel). The first cell installs qiskit-aer if it's missing, and stops with a message if you're on the wrong kernel.
 
 ## The tracks
 
-Each team works on one track. The problem sets are revealed Friday at 7:15 PM, each team ranks all three, and assignments are announced after the warm-up. Each track has its own judges.
+Each team works on one track. The problem sets are revealed Friday at 7:15 PM, each team ranks all three, and each team's track is announced after the warm-up. Each track has its own judges.
 
 | Folder | Track | The question | Hardware | Good fit for |
 |---|---|---|---|---|
-| [`1-utc-secure-the-grid`](./1-utc-secure-the-grid) | **Secure the Grid** (UTC) | Catch an eavesdropper with quantum keys, size up the quantum threat to today's encryption, and design a secure grid network | IonQ or Quantinuum | Cybersecurity, CS |
+| [`1-utc-secure-the-grid`](./1-utc-secure-the-grid) | **Secure the Grid** (UTC) | Catch an eavesdropper with quantum keys, size up the quantum threat to today's encryption, and design a secure grid network | IonQ (plus Quantinuum emulators) | Cybersecurity, CS |
 | [`2-tva-sensor-placement`](./2-tva-sensor-placement) | **Grid Sensor Placement** (TVA) | What's the fewest sensors that let operators see every substation? | IonQ Forte | EE, CS |
 | [`3-tva-plant-scheduling`](./3-tva-plant-scheduling) | **Power Plant Scheduling** (TVA) | Which power plants should run each hour, at the lowest cost? | IonQ Forte | EE, CS, math |
 | [`4-qbraid-award`](./4-qbraid-award) | **qBraid Award** (optional, any team) | The most creative use of qBraid, on top of your track | Any | Everyone |
@@ -34,7 +34,7 @@ Every track folder has a `README.md` with the problem, milestones and track-spec
 | Fri 7:00 PM | The weekend, and how judging works |
 | Fri 7:15 PM | Problem sets revealed; each team ranks its choices |
 | Fri 7:30 PM | Warm-up and qBraid sign-up ([warm-up repo](https://github.com/qBraid/tn-quantum-hackathon-warmup)) |
-| Fri 8:15 PM | Team assignments announced |
+| Fri 8:15 PM | Track assignments announced, and this repository opens |
 | Fri 8:30 PM | Hacking starts |
 | Sat 9:00 to 11:00 AM | TVA internships table |
 | Sat 1:30 PM | Quantinuum technical session |
@@ -51,17 +51,17 @@ Every track folder has a `README.md` with the problem, milestones and track-spec
 
 | What | Who | Where |
 |---|---|---|
-| **Your pitch deck** for the judges: the problem, the customer, your solution and its value | Every team | Submission link: *coming soon, and pinned in Discord* <!-- Bryan: put the pitch deck and code submission link here --> |
+| **Your pitch deck** for the judges: the problem, the customer, your solution and its value | Every team | Submission link: *coming soon, and pinned in Discord* |
 | **Your code**, as a ZIP of your track folder (put your own notebooks and tools in it too) | Every team | The same submission link |
 | **qBraid Award entry** (optional): a link to your video and a link to your 3 slides | Any team that enters | [qBraid Award form](https://docs.google.com/forms/d/e/1FAIpQLSeeom5YX0jADpt1a09Xox9EUQYPtJYoaggeVy-1iX4VT3yY9g/viewform) ([details](./4-qbraid-award)) |
 
-- **Make the ZIP** in a qBraid Lab terminal, from the repo folder: `python -m zipfile -c our-team.zip 2-tva-sensor-placement` (use your track's folder and your team's name). Then right-click the ZIP in the file browser and choose Download.
+- **Make the ZIP** in a qBraid Lab terminal. First `cd` into the repo folder (run `ls` if you're not sure of its name; it's usually `tn-quantum-hackathon`), then run `python -m zipfile -c our-team.zip 2-tva-sensor-placement`, using your track's folder and your team's name. Then right-click the ZIP in the file browser and choose Download.
 - **Check every link before you submit.** Set sharing to "anyone with the link can view", then open the link in a private browser window to make sure it works. Judges can't score what they can't open.
 - **Bring your deck to your judging slot** on a USB stick or your laptop.
 
 ## What judges look for
 
-On Sunday morning, each team presents its pitch deck to its track's judges. They look at:
+On Sunday morning, each team presents its pitch deck to its track's judges. The organizers confirm how long each slot is. Build your deck around what the judges look at:
 
 - **Your understanding.** Everyone on the team should be able to explain what you did, why, and what your results mean, in plain words.
 - **Your presentation:** the problem, the customer (who has this problem), your solution, and the value proposition (what it's worth to them).
@@ -79,9 +79,9 @@ They get you going; they aren't the whole job. Add your own code, cells and note
 ## Running on quantum hardware
 
 - **Practice for free first.** IonQ's simulator on qBraid (`ionq:ionq:sim:simulator`) costs nothing. Its `noise_model` option adds IonQ's gate noise, which mostly shows up on circuits with many two-qubit gates. Most starter notebooks have a cell ready to go.
-- **Then run on the real thing.** Swap in your track's QPU, such as IonQ Forte (`ionq:ionq:qpu:forte-1`). Real runs use credits, so tune on the simulator first and cap each run at 200 shots. Queues can take hours, so send hardware runs early: aim for Saturday, not Sunday morning.
-- **If IonQ is down or its queue isn't moving,** try IQM Garnet (`aws:iqm:qpu:garnet`) or Rigetti (`rigetti:rigetti:qpu:cepheus-1-108q`). Ask a qBraid mentor before switching.
-- **Quantinuum (Secure the Grid).** Open the Quantinuum page under Devices in your qBraid account, read each of Quantinuum's documents and accept their terms. You only do this once. Until you accept, Quantinuum jobs are refused. Then you run on Quantinuum through qBraid like any other device.
+- **Then run on the real thing.** Swap in your track's QPU, such as IonQ Forte (`ionq:ionq:qpu:forte-1`). Real runs use credits, so tune on the simulator first and cap each run at 200 shots. Your team's credits are meant for your track's hardware run: do that first, and ask a mentor before any other paid run. Queues can take hours, so send hardware runs early: aim for Saturday, not Sunday morning.
+- **If IonQ is down or its queue isn't moving,** try IQM Garnet (`aws:iqm:qpu:garnet`). Ask a qBraid mentor before switching.
+- **Quantinuum emulators (Secure the Grid).** This event has Quantinuum's emulators (for example `quantinuum:quantinuum:sim:h2-emulator`), which model its hardware. First open the Quantinuum page under Devices in your qBraid account, read each of Quantinuum's documents and accept their terms. You only do this once; until you accept, Quantinuum jobs are refused. Then run on them through qBraid like any other device.
 - **Record every job ID.** It's your proof of the run.
 - **Check prices and live status** for every device in the [device catalog](https://account.qbraid.com/devices).
 
