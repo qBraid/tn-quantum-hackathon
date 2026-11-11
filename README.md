@@ -4,13 +4,13 @@
 
 Chattanooga, November 13 to 15, 2026. Hosted by the Chattanooga Quantum Collaborative and CO.LAB. The challenges come from TVA and UTC, and qBraid is the platform partner.
 
-Everything runs in qBraid Lab in your browser. There's nothing to install.
+Everything runs in qBraid Lab in your browser. There's nothing to install on your laptop.
 
 ## Start here (Friday evening)
 
 1. **Join the hackathon's qBraid organization** with the invite link pinned in Discord. That's where your team's credits come from.
 2. **Open this repository in qBraid Lab** with the button above, or from the Explore page in your qBraid account.
-3. **Pick the kernel.** Use the qBraid SDK environment's kernel for every notebook here. The first cell of each notebook installs anything that's missing.
+3. **Pick the kernel.** Use the qBraid SDK environment's kernel for every notebook here (Kernel > Change Kernel). The first cell installs qiskit-aer if it's missing, and stops with a message if you're on the wrong kernel.
 4. **Do the warm-up** in [`0-warm-up`](./0-warm-up). It takes about 20 minutes and isn't scored. It makes sure your account, credits and hardware access all work before hacking starts.
 
 ## The tracks
@@ -31,43 +31,49 @@ Every track folder has a `README.md` with the problem, milestones and track-spec
 | When | What |
 |---|---|
 | Fri 7:00 PM | Tracks revealed; teams choose |
+| Fri 7:15 PM | qBraid intro, and how judging works |
 | Fri 7:30 PM | Warm-up ([`0-warm-up`](./0-warm-up)) |
 | Fri 8:00 PM | Hacking starts |
-| Sat 12:20 PM | TVA spotlight and career tables (lunch) |
+| Sat 9:00 to 11:00 AM | TVA internships table |
 | Sat 1:30 PM | Quantinuum technical session |
-| Sat 3:30 PM | CO.LAB session: pitching your project (optional, useful for the finalist deck) |
+| Sat 3:30 PM | CO.LAB session: pitching your project (optional) |
 | Sat 7:00 PM | qBraid tests the submission portal with teams |
-| **Sat 9:00 PM** | **Last hardware runs.** Queues can take hours, so send yours earlier |
 | **Sun 9:00 AM** | **Hard deadline** for final project materials |
 | Sun 10:30 AM | Judges come around and talk with each team |
-| Sun 12:30 PM | Finalists announced; they build a 5-slide deck |
-| Sun afternoon | Closing ceremony at The Landing Social House. Selected teams present (4 minutes each), and winners and the qBraid Award are announced |
+| Sun 12:30 PM | Finalists announced |
+| Sun 1:00 PM | Closing ceremony at The Landing Social House. Finalists present from 1:35 PM; winners and the qBraid Award are announced around 2:15 PM |
 
-## What every team submits (by Sunday 9:00 AM)
+## What judges look for
 
-1. **Your notebooks**, run top to bottom, with every hardware job ID recorded in them.
-2. **Anything extra your track asks for.** For example, Secure the Grid asks for written answers to each Part.
+The organizers share the final rubric and the submission details at kickoff, and the submission link goes in Discord. Here's what we know now:
 
-Submit through the submission portal (details in Discord).
+- **Understanding and clarity count most.** Judges visit your team on Sunday morning and ask you to walk them through your work. Everyone on the team should be able to say what you did, why, and what your results mean, in plain words.
+- **Code counts less than what you can show with it.** A simple approach you can explain beats a pile of code nobody on the team understands.
+- **Build tools, not just notebooks.** Tools you build count: an interactive view of your grid, a dashboard that compares your quantum and classical answers, a checker that stress-tests a schedule, a visual that shows BB84 catching a spy. Each track's README has ideas.
+- **Be honest about quantum.** Say plainly where it helps and where it doesn't yet. That earns points.
+- **Record every hardware job ID.** It's your proof of what ran.
 
-## Judging and the finalist deck
+**Have ready by Sunday 9:00 AM:** your notebooks and any tools you built, run with their outputs, plus your job IDs. Secure the Grid teams also need their written answers. Format details come at kickoff.
 
-- **Judges visit your team (Sunday 10:30 AM to noon).** Be ready to walk them through your work. Everyone on the team should be able to explain it.
-- **If your team is selected (announced at 12:30 PM),** you build a 5-slide deck and present it for 4 minutes at the closing ceremony. The slides are: Problem, Customer, Solution, Value Proposition, What We Learned. Aim for about half technical and half business.
-- **Plan the deck as you go.** Your track's README lists what your Solution slide should show.
+**Finalists** (announced Sunday 12:30 PM) present at the closing ceremony. The organizers will share the format.
 
 ## Running on quantum hardware
 
-- **Practice for free first.** IonQ's simulator on qBraid (`ionq:ionq:sim:simulator`) costs nothing and can add realistic hardware noise. Every starter notebook has a cell ready to go.
-- **Then run on the real thing.** Swap in your track's QPU, such as IonQ Forte (`ionq:ionq:qpu:forte-1`). Real runs use credits, so tune on the simulator first and cap each run at 200 shots.
+- **Practice for free first.** IonQ's simulator on qBraid (`ionq:ionq:sim:simulator`) costs nothing. Its `noise_model` option adds IonQ's gate noise, which mostly shows up on circuits with many two-qubit gates. Most starter notebooks have a cell ready to go.
+- **Then run on the real thing.** Swap in your track's QPU, such as IonQ Forte (`ionq:ionq:qpu:forte-1`). Real runs use credits, so tune on the simulator first and cap each run at 200 shots. Queues can take hours, so send hardware runs early: aim for Saturday, not Sunday morning.
 - **If IonQ is down or its queue isn't moving,** try IQM Garnet (`aws:iqm:qpu:garnet`) or Rigetti (`rigetti:rigetti:qpu:cepheus-1-108q`). Ask a qBraid mentor before switching.
-- **Quantinuum (Secure the Grid).** You'll get an invite to Quantinuum's Nexus portal. Accept it and its terms before Saturday, then you run through qBraid.
+- **Quantinuum (Secure the Grid).** Open the Quantinuum page under Devices in your qBraid account, read each of Quantinuum's documents and accept their terms. You only do this once. Until you accept, Quantinuum jobs are refused. Then you run on Quantinuum through qBraid like any other device.
 - **Record every job ID.** It's your proof of the run.
 - **Check prices and live status** for every device in the [device catalog](https://account.qbraid.com/devices).
 
 ## Using AI
 
-AI assistants are allowed, including qBraid's own [AI Chat and Agent mode](https://docs.qbraid.com/v2/ai/user-guide/overview) in your account. Judges will ask you to explain your reasoning, so make sure everyone on the team understands what you submit.
+AI assistants are allowed, including qBraid's own. qBraid gives you two kinds:
+
+- **Chat, for questions.** [AI Chat](https://account.qbraid.com/chat) in your qBraid account explains results, compares devices and decodes errors.
+- **An agent, for doing the work.** In qBraid Lab, open the Launcher and click the **Claude** or **Codex** icon. The agent runs inside your Lab, so it can read your notebooks, write and run code, and build visuals.
+
+Judges will ask you to explain your reasoning, so make sure everyone on the team understands what you submit.
 
 ## Certificates
 
@@ -79,5 +85,5 @@ Everyone who completes the weekend gets a qBraid completion certificate with a v
 - **Overnight:** replies may be slower.
 - **Docs:**
   - [qBraid docs](https://docs.qbraid.com)
-  - [Getting started in qBraid Lab](https://docs.qbraid.com/lab/user-guide/getting-started)
-  - [Running jobs with the qBraid SDK](https://docs.qbraid.com/sdk/user-guide/providers/native)
+  - [Getting started in qBraid Lab](https://docs.qbraid.com/v2/lab/user-guide/getting-started)
+  - [Running jobs with the qBraid SDK](https://docs.qbraid.com/v2/sdk/user-guide/providers/getting-started)

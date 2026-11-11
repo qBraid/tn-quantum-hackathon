@@ -24,9 +24,9 @@ Two substations need a shared secret key to encrypt the data between them. Quant
 
 - **Part 1. Shared key, no eavesdropper.** Run BB84 on the simulator and show both parties end up with matching keys, with near-zero error.
 - **Part 2. Add the eavesdropper.** Add an eavesdropper who intercepts each qubit and resends it. Report the error rate (QBER) with and without the eavesdropper, and show the jump.
-- **Part 3. Hardware and thresholds.** Run the protocol on real hardware and report the error rate from hardware noise alone. The notebook packs 16 rounds into one circuit, so this is **one job**, not one job per qubit. Then answer in a few sentences: how should a utility set a threshold that separates a real eavesdropper from normal line noise?
+- **Part 3. Hardware and thresholds.** Run the protocol on real hardware and report the error rate from hardware noise alone. The notebook packs 16 rounds into one circuit, so this is **one job**, not one job per qubit. Then answer in a few sentences: how should a utility set a threshold that separates a real eavesdropper from normal line noise? (IonQ's noisy simulator shows almost no errors on BB84, because BB84 has no two-qubit gates. The error rate from hardware noise has to come from the real QPU.)
 - **Part 4. Why physics wins (written).** In one short paragraph, explain why BB84's security comes from physics, and what classical key exchange can't match.
-- **Stretch.** Run your protocol on two different simulator backends through qBraid and show the error rate is consistent.
+- **Stretch.** Run your protocol on two different simulator backends through qBraid and show the error rate is consistent. Ask a qBraid mentor which second simulator is free.
 
 ## Step 2: Size up the threat (Shor's algorithm and post-quantum cryptography)
 
@@ -44,7 +44,7 @@ Now put it together. Securing a metro-scale grid network takes more than one too
 
 - **Part 1. Architecture.** A diagram and a written rationale showing where you use QKD and where PQC, and why. Address distance limits, the number of substations, the "trusted node" problem on long QKD links, and timing synchronization across sites.
 - **Part 2. Assumptions and tradeoffs.** List your key assumptions and tradeoffs. Back up every hardware limit with real numbers from qBraid's device list, not guesses.
-- **Part 3. Working prototype.** Build and run one link on qBraid: reuse your BB84 from Step 1, or finish the teleportation link in the notebook.
+- **Part 3. Working prototype.** Build and run one link on qBraid: reuse your BB84 from Step 1, or finish the teleportation link in the notebook (its last cell runs it on IonQ's free simulator).
 - **Part 4. Rollout plan.** A phased plan: what the utility deploys first, next and later, and why.
 - **Stretch.** A short cost-versus-security argument aimed at the utility's board.
 
@@ -52,24 +52,30 @@ Now put it together. Securing a metro-scale grid network takes more than one too
 
 | Device | qBraid ID | Notes |
 |---|---|---|
-| IonQ simulator | `ionq:ionq:sim:simulator` | **Free.** Use `noise_model="aria-1"` to mimic hardware |
+| IonQ simulator | `ionq:ionq:sim:simulator` | **Free.** Pass `runtime_options={"noise_model": "aria-1"}` to add IonQ's gate noise (see the notebooks' hardware cell) |
 | IonQ Forte | `ionq:ionq:qpu:forte-1` | Real QPU. Uses credits |
-| Quantinuum | Posted in Discord once access opens | You'll get an invite to Quantinuum's Nexus portal. Accept it and its terms before Saturday, then run through qBraid |
+| Quantinuum | On the Quantinuum page under Devices in your qBraid account | Accept Quantinuum's terms there once (you'll see a prompt), then run through qBraid. Until you accept, Quantinuum jobs are refused |
 | IQM Garnet | `aws:iqm:qpu:garnet` | Backup if IonQ is down or its queue isn't moving. Ask a qBraid mentor first |
 
 Rules:
 - Get it right on a simulator first.
 - Cap each hardware run at 200 shots, and plan on one hardware run for each Part that asks for one (UTC's guidance). Simulators are free and unlimited.
-- Last hardware runs: **Saturday 9:00 PM**.
+- Send hardware runs early: queues can take hours, so aim for Saturday, not Sunday morning.
 - Write down every job ID.
 
-## What to submit (by Sunday 9:00 AM)
+## What judges look for
 
-1. **Your notebooks**, with code that runs and your hardware job IDs.
-2. **Written answers** to each Part. Label them by step and Part (for example, "Step 1, Part 3") so judges can follow along.
-Judges visit your team on Sunday morning, and selected teams present a 5-slide deck at the closing ceremony (see the [main README](../README.md#judging-and-the-finalist-deck)). In that deck, your network design from Step 3 is the Solution, and the utility is the Customer.
+Judges visit your team on Sunday morning. They look for three things: do you understand why your approach works, can you explain it to someone who isn't an expert, and does it work. A design that uses only post-quantum cryptography can score just as well as one with QKD everywhere, if you justify it. Code counts less than understanding and clarity. See the [main README](../README.md#what-judges-look-for).
 
-Judges look for three things: does it work, do you understand why it works, and can you explain it to someone who isn't an expert. A design that uses only post-quantum cryptography can score just as well as one with QKD everywhere, if you justify it.
+**Have ready by Sunday 9:00 AM** (format details come at kickoff):
+1. **Your notebooks and tools**, run with their outputs and your hardware job IDs.
+2. **Written answers** to each Part, labeled by step and Part (for example, "Step 1, Part 3") so judges can follow along.
+
+**Tools worth building** (they count):
+- an interactive BB84 demo where you add an eavesdropper and watch the error rate jump;
+- a threshold explorer: line noise versus a spy, and where you'd set the alarm;
+- a map of the utility's network that shows which links get quantum keys and which get post-quantum cryptography, and why;
+- a migration tracker that ranks the systems to fix first.
 
 Also open to your team: the [qBraid Award](../4-qbraid-award) for the most creative use of qBraid.
 
@@ -77,4 +83,4 @@ Also open to your team: the [qBraid Award](../4-qbraid-award) for the most creat
 
 - [qBraid device catalog](https://account.qbraid.com/devices) (qubit counts, prices, status)
 - [NIST post-quantum cryptography](https://csrc.nist.gov/projects/post-quantum-cryptography)
-- [EPB Quantum Network](https://epbquantum.com) (Chattanooga's commercial quantum network)
+- [EPB Quantum Network](https://quantum.epb.com) (Chattanooga's commercial quantum network)

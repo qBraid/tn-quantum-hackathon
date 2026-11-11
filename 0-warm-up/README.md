@@ -23,4 +23,7 @@ Stuck on any step? Flag a qBraid mentor right away.
 
 ## Using AI
 
-Now's a good time to set up the AI helper you'll use this weekend. qBraid's [AI Chat](https://docs.qbraid.com/v2/ai/user-guide/overview) is built into your account. Try asking it to explain the QRNG circuit, or why the simulator's bits aren't truly random.
+Now's a good time to set up the AI helpers you'll use this weekend:
+
+- **Chat, for questions.** [AI Chat](https://account.qbraid.com/chat) is built into your qBraid account. Try asking it to explain the QRNG circuit, or why the simulator's bits aren't truly random.
+- **An agent, for doing the work.** In qBraid Lab, open the Launcher and click the **Claude** or **Codex** icon. The agent runs inside your Lab, so it can open this notebook, change the code and run it. Try asking it to add a histogram of the QRNG bits.
