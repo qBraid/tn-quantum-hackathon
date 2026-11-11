@@ -16,7 +16,7 @@ controls, or turn it into a game.
 """
 
 import html
-import sys
+import numbers
 
 PALETTE = ["#6c3ce1", "#e0457b", "#2bb3a3", "#f2a33a"]
 
@@ -28,11 +28,14 @@ def make_visual(results, title="Our results", path="visual.html", top=16):
              like {"Simulator": {...}, "Hardware": {...}}.
     top:     how many of the most frequent outcomes to show.
     """
-    if results and all(isinstance(v, (int, float)) for v in results.values()):
+    if not results:
+        raise ValueError("make_visual needs at least one counts dict")
+    if all(isinstance(v, numbers.Number) for v in results.values()):
         results = {"Results": results}
     series = {name: {k: v / max(sum(c.values()), 1) for k, v in c.items()} for name, c in results.items()}
-    first = next(iter(series.values()))
-    keys = sorted({k for s in series.values() for k in s}, key=lambda k: -first.get(k, 0))[:top]
+    # Rank outcomes by their biggest share in any series, so a hardware peak still shows
+    keys = sorted({k for s in series.values() for k in s},
+                  key=lambda k: -max(s.get(k, 0) for s in series.values()))[:top]
     colors = {name: PALETTE[i % len(PALETTE)] for i, name in enumerate(series)}
     peak = max([v for s in series.values() for v in s.values()] or [1])
     legend = "".join(f'<span style="--c:{colors[n]}">{html.escape(n)}</span>' for n in series)

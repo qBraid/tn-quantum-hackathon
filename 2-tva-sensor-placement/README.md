@@ -23,8 +23,7 @@ TVA shared NERC's *Reliability Guideline: PMU Placement and Installation* (Decem
 1. Open `starter.ipynb` in qBraid Lab with the qBraid SDK environment's kernel.
 2. Run the cells from the top.
 3. Do the TODOs (there are 3). Each one has a hint.
-
-Optional QAOA primer: `../0-warm-up/qaoa_islanding.ipynb`.
+4. Early on, one teammate works through [`qaoa_primer.ipynb`](./qaoa_primer.ipynb) (the 6-node part, about 45 minutes) while the rest start milestones 1 and 2. It shows QAOA's three pieces (cost layer, mixer, optimizer) on a textbook problem, Max-Cut.
 
 ## The data
 
@@ -44,7 +43,7 @@ A *bus* is a substation. Each file lists the buses, the lines, the zero-injectio
 |---|---|---|---|---|
 | 1 | Understand it | about 1 h | Draw the grid and place sensors by hand | you have a placement and one sentence on what a PMU sees |
 | 2 | Classical baseline | 2 to 3 h | A greedy rule and an exact integer program | you have the optimal count and its runtime |
-| 3 | Code the quantum cost function | 1 to 2 h | The number of sensors plus a large penalty for every unseen substation. Check it with the checker on the 6-substation piece. | its cheapest answer matches the integer program |
+| 3 | Code the quantum cost function | 1 to 2 h | The number of sensors plus a large penalty for every unseen substation. Check it with the checker on the 6-substation piece. | its cheapest answer matches the integer program, and you can say in one sentence how the primer's Max-Cut cost relates to yours |
 | 4 | Run QAOA | 3 to 4 h | On the simulator: first the 6-substation piece, then all 14 | you have a chart of how often QAOA finds an optimal placement and how often it leaves a substation unseen |
 | 5 | IonQ hardware run | about 2 h, early (queues can take hours) | The 6-substation piece at 100 to 200 shots, after tuning on IonQ's free simulator with its noise model on | you have the job ID and a chart comparing hardware with the simulator |
 | 6 | Tell the story | about 2 h | What the sensors cost, what an operator gains, and where quantum honestly stands | you can walk a judge through your results in 5 minutes |
@@ -53,9 +52,9 @@ Why a 6-substation piece for hardware: the full 14-substation QAOA circuit needs
 
 ## What judges look for
 
-Judges visit your team on Sunday morning and ask you to walk them through your work. Understanding and clarity count most: why your cost function works, what QAOA did, and what your results mean for a grid operator. Code counts less. See the [main README](../README.md#what-judges-look-for).
+On Sunday morning, you present your pitch deck to this track's judges, and they ask you to walk them through your work. Understanding and clarity count most: why your cost function works, what QAOA did, and what your results mean for a grid operator. Code counts less. See the [main README](../README.md#what-judges-look-for).
 
-**Everything is due Sunday at 9:00 AM** (what to submit, and where, is confirmed at kickoff). Have your notebook and any tools you built, run with their outputs and your IonQ job IDs. Be ready to explain:
+**Due Sunday 9:00 AM:** your pitch deck and your code as a ZIP ([what to submit, and where](../README.md#what-to-submit)). Have your notebook and any tools you built, run with their outputs and your IonQ job IDs. Be ready to explain:
 - **Your solution:** where the sensors go, how many, and how much of the grid they see; what happens if one fails; greedy versus integer program versus QAOA; and your hardware result next to the simulator.
 - **Customer and value proposition:** what a sensor costs and what a grid operator gains. A 2014 U.S. Department of Energy report, [Factors Affecting PMU Installation Costs](https://www.energy.gov/oe/articles/factors-affecting-pmu-installation-costs-october-2014), is a good starting point for costs.
 - **What you learned:** where quantum honestly stands on this problem (see below).
@@ -71,7 +70,7 @@ Judges visit your team on Sunday morning and ask you to walk them through your w
 
 ## Hardware rules
 
-- **Tune on simulators first:** the local Aer simulator, then IonQ's free simulator (`ionq:ionq:sim:simulator`) with `runtime_options={"noise_model": "aria-1"}`. The notebook's hardware cell is set up for this.
+- **Tune on simulators first:** the local Aer simulator, then IonQ's free simulator (`ionq:ionq:sim:simulator`) with `runtime_options={"noise_model": "forte-1"}`. The notebook's hardware cell is set up for this.
 - **Real hardware is IonQ Forte** (`ionq:ionq:qpu:forte-1`) through qBraid. Run only your final, tuned circuit.
 - **Cap every hardware run at 200 shots.**
 - **Send hardware runs early.** Queues can take hours, so aim for Saturday, not Sunday morning.
