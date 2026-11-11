@@ -4,7 +4,7 @@
 
 | | |
 |---|---|
-| **What you send** | 2 or 3 slides from the template in this folder, plus a 3 to 5 minute screen recording |
+| **What you send** | 2 or 3 slides from the template in this folder, a 3 to 5 minute screen recording, and a link to your [qBraid artifact](#make-it-visual-in-one-line) if you made a visual |
 | **Where** | [The entry form](https://docs.google.com/forms/d/e/1FAIpQLSeeom5YX0jADpt1a09Xox9EUQYPtJYoaggeVy-1iX4VT3yY9g/viewform) (also pinned in Discord) |
 | **When** | By **Sunday 9:00 AM**, with your final project materials |
 | **Prize** | $200 in gift cards split across the winning team, plus qBraid credits for each member. Announced at the closing ceremony |
@@ -12,21 +12,26 @@
 
 > **Use your credits.** They're there to be used, not to sit in your wallet. Run on real hardware, launch a GPU, try qBraid AI, and explore everything in the [qBraid docs](https://docs.qbraid.com). The one rule: every run should do something for your project. Benchmarking a device just to fill a table doesn't count.
 
+> **Try a GPU.** Once your problem grows past a few dozen qubits or a big optimization, a laptop-sized simulator can't keep up. Launch an on-demand GPU instance, or send circuits to qBraid's GPU simulators ([how](#ideas)). A GPU run that moves your project forward counts in your favor.
+
 ## Enter in 4 steps (about 30 minutes)
 
-1. **Use qBraid in your project.** You probably already are: if your notebook runs in qBraid Lab and sends a job to a qBraid device or simulator, you qualify. Want to stand out? [Make it visual](#make-it-visual-in-one-line). That takes about 5 minutes.
+1. **Use qBraid in your project.** You probably already are: if your notebook runs in qBraid Lab and sends a job to a qBraid device or simulator, you qualify. Want to stand out? [Make it visual](#make-it-visual-in-one-line) (about 5 minutes), or take your problem to a GPU.
 2. **Fill in the slides (10 minutes).** The template is in this folder: [`qbraid-award-template.pptx`](./qbraid-award-template.pptx).
    - **Get it:** in qBraid Lab, right-click the file and choose Download.
    - **Open it:** PowerPoint, Keynote or Google Slides all work. For Google Slides, upload it to Drive, then open it with Google Slides.
    - **Fill it in:** every slide tells you what to write. The speaker notes tell you what to say in your video.
 3. **Record your screen (10 minutes).** Walk through your slides, then show qBraid running. Use the [script below](#the-video-script).
-4. **Fill in the [entry form](https://docs.google.com/forms/d/e/1FAIpQLSeeom5YX0jADpt1a09Xox9EUQYPtJYoaggeVy-1iX4VT3yY9g/viewform) (2 minutes).** It's also pinned in Discord. Enter:
+4. **Fill in the [entry form](https://docs.google.com/forms/d/e/1FAIpQLSeeom5YX0jADpt1a09Xox9EUQYPtJYoaggeVy-1iX4VT3yY9g/viewform) (2 minutes).** It's also pinned in Discord. One person enters for the whole team:
    - team name
+   - challenge track
+   - every team member's email, one per line: the email each person uses on qBraid, so the prize and credits reach everyone
    - slides link
    - video link
-   - your email: use the one on your qBraid account, so the prize reaches you. The form emails you a copy of your entry, with a link to edit it
+   - qBraid artifact link, if you [published a visual](#make-it-visual-in-one-line)
+   - your own email, so the form can send you a copy of the entry with a link to edit it
 
-   Set both links to "anyone with the link can view". You can edit your entry until the deadline.
+   Set every link to "anyone with the link can view". You can edit your entry until the deadline.
 
 ## Make it visual in one line
 
@@ -39,6 +44,8 @@ from make_visual import make_visual
 make_visual({"Simulator": sim_counts, "IonQ": hw_counts}, title="Our results")   # or just one counts dict
 ```
 
+Use the names your notebook already has: plant scheduling `make_visual({"Simulator": sim_counts, "IonQ": counts})`; sensor placement `make_visual({"IonQ": counts})`; BB84 and Grover `make_visual({"Simulator": counts, "IonQ": hw_counts})`; QRNG `make_visual({"IonQ": hw_counts})`.
+
 1. **The cell writes `visual.html`,** an animated bar chart, in the same folder as your notebook.
 2. **Open it next to your notebook** in qBraid Lab's Agent Canvas panel. Run this from a Lab terminal in that folder:
 
@@ -46,7 +53,14 @@ make_visual({"Simulator": sim_counts, "IonQ": hw_counts}, title="Our results")  
    qbraid-canvas visual.html --title "Our results"
    ```
 
-3. **Make it yours.** Ask your AI assistant to restyle it, add controls, animate your algorithm step by step, or turn it into a game.
+3. **Publish it as a qBraid artifact,** so judges can open it from a link. From the same terminal:
+
+   ```bash
+   qbraid artifacts publish visual.html --title "Our results" --visibility public
+   ```
+
+   It prints a link anyone can open. Put that link in the entry form and on your slides. If `qbraid artifacts` isn't available in your terminal, ask a qBraid mentor.
+4. **Make it yours.** Ask your coding agent to restyle it, add controls, animate your algorithm step by step, or turn it into a game. To publish the new version to the same link, run `qbraid artifacts list` for its ID, then `qbraid artifacts update <ID> --file visual.html`.
 
 For inspiration, see [Quantum Runner](https://account.qbraid.com/explore/projects/q-ready-quantum-runner-2gkzz6) on qBraid's Explore page. It's a side-scroller where a real quantum measurement decides where the gaps go.
 
@@ -75,16 +89,18 @@ Here's a [finished example](./qbraid-award-example.pptx) ([PDF](./qbraid-award-e
 
 ## The video script
 
-Record your screen with someone on the team talking. One take is fine, and it doesn't need editing.
+Record your screen with someone on the team talking, 3 to 5 minutes. One take is fine, and it doesn't need editing. Be thorough: this video is how judges see your work, so show it off, tied to your challenge.
 
-| Time | Show | Say something like |
+| Time | Show | Cover |
 |---|---|---|
-| 0:00 to 0:30 | Slide 1 | "We're [team] in the [track] track. We built [one sentence]. Here are the qBraid features we used." |
-| 0:30 to 3:00 | **qBraid running:** your notebook in qBraid Lab, a job going to a device, results coming back on the Jobs page | "Here's our notebook running on qBraid. We're sending this circuit to [device]..." |
-| 3:00 to 4:30 | Slide 2, or your visual running live | "This shows [result in plain words]. AI helped us [what], and we checked [what]." |
-| Last 30 seconds | Slide 3, or just your face | "Next we'd try [idea]." |
+| 0:00 to 0:45 | Slide 1 | **The problem.** Your track's challenge in plain words, who it matters to (a grid operator, a utility, a security team) and what you built to tackle it. |
+| 0:45 to 3:15 | **qBraid doing real work, live:** your notebook or tool in qBraid Lab, a job on the Jobs page, your visual or artifact, a GPU run, the agent building something | **How you used qBraid for this problem, specifically.** For each feature: what you did, why it helped your challenge, and what happened. For example: "We sent our 6-substation circuit to IonQ Forte to see how hardware noise changes the placement. Here's the job, and here's how the answer shifted." |
+| 3:15 to 4:30 | Slide 3, or your visual running live | **What you found.** The result in plain words, what surprised you, and how AI helped (and where you checked it). |
+| Last 30 seconds | Slide 3, or just your face | **What's next.** What you'd try with more time. |
 
 **One rule:** we have to *see* it run on qBraid.
+
+**Not enough on its own:** "We submitted a job using qBraid." Tell us what that job did for your challenge and what you learned from it.
 
 **How to record and share:**
 - **Mac:** Cmd+Shift+5
@@ -101,9 +117,9 @@ Your credits are there to be used, so try things. Pick what moves your track's p
 - **Run GPUs.** Take your problem past what fits on a laptop.
   - **On-demand GPU instance:** launch one from the **On-Demand** tab of your [qBraid dashboard](https://account.qbraid.com/dashboard) ([GPUs in qBraid Lab](https://docs.qbraid.com/v2/lab/user-guide/gpus)).
   - **GPU simulators:** send circuits to `qbraid:qbraid:sim:gpu-sv` (exact, up to 35 qubits) or `qbraid:qbraid:sim:gpu-tn` (tensor network, up to 500 qubits) ([GPU simulators](https://docs.qbraid.com/v2/sdk/user-guide/providers/gpu-simulators)).
-- **qBraid AI (encouraged).**
-  - Ask [AI Chat](https://account.qbraid.com/chat) to compare devices or explain a result.
-  - Open **Agent** in your qBraid account and attach a coding agent to your Lab instance ([Agent mode](https://docs.qbraid.com/v2/ai/user-guide/agent-mode)).
+- **qBraid AI (encouraged).** Chat and an agent do different jobs:
+  - **Chat answers questions.** Ask [AI Chat](https://account.qbraid.com/chat) in your qBraid account to compare devices, explain a result or decode an error.
+  - **An agent does the work, inside qBraid Lab.** Open the Lab Launcher and click the **Claude** or **Codex** icon. The agent runs in your Lab, so it can read your notebooks, write and run code, and build your visual. Use it when you want something built or changed, not just explained.
   - Connect your own AI tool to qBraid's [MCP server](https://docs.qbraid.com/v2/ai/integrations/mcp-server) at `https://mcp.qbraid.com/mcp`.
 - **The rest of the [qBraid docs](https://docs.qbraid.com):**
   - the [Circuit Composer](https://docs.qbraid.com/v2/account/composer)
@@ -140,6 +156,10 @@ We re-watch the top two and pick the winner.
 **Should we save our credits?** No. Use them on hardware, GPUs and qBraid AI. Just make sure each run does something for your project.
 
 **We only used simulators. Can we still win?** Yes. Hardware isn't required.
+
+**Does everyone on the team need to enter?** No. One person enters for the team, and lists every member's qBraid email so the prize and credits reach each of you.
+
+**What's a qBraid artifact?** A page you publish from qBraid Lab with `qbraid artifacts publish`, such as your `visual.html`. It gives judges a link they can open without running your code. See [Make it visual](#make-it-visual-in-one-line).
 
 **Can we use AI?** Yes, please. Say what it did and where you stepped in.
 
