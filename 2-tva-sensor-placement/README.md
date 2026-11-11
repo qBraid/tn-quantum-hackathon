@@ -36,7 +36,7 @@ Optional QAOA primer: `../0-warm-up/qaoa_islanding.ipynb`.
 
 A *bus* is a substation. Each file lists the buses, the lines, the zero-injection buses (see stretch goals), the power plant buses and each bus's load. See `data/README.md` for sources.
 
-`check.py` checks any placement: is it valid, which substations are unseen, how sturdy it is, and (for grids of 20 buses or fewer) how far it is from the fewest possible. Run `python check.py` for a demo.
+`check.py` checks any placement: is it valid, which substations are unseen, and how sturdy it is. Once you have your own answer, `check_placement(grid, chosen, compare=True)` also says how far it is from the fewest possible (grids of 20 buses or fewer). Run `%run check.py` in a notebook cell for a demo.
 
 ## Milestones
 
@@ -46,29 +46,35 @@ A *bus* is a substation. Each file lists the buses, the lines, the zero-injectio
 | 2 | Classical baseline | 2 to 3 h | A greedy rule and an exact integer program | you have the optimal count and its runtime |
 | 3 | Code the quantum cost function | 1 to 2 h | The number of sensors plus a large penalty for every unseen substation. Check it with the checker on the 6-substation piece. | its cheapest answer matches the integer program |
 | 4 | Run QAOA | 3 to 4 h | On the simulator: first the 6-substation piece, then all 14 | you have a chart of how often QAOA finds an optimal placement and how often it leaves a substation unseen |
-| 5 | IonQ hardware run | about 2 h, by **Sat 9 PM** | The 6-substation piece at 100 to 200 shots, after tuning on IonQ's free noise simulator | you have the job ID and a chart comparing hardware with the simulator |
+| 5 | IonQ hardware run | about 2 h, early (queues can take hours) | The 6-substation piece at 100 to 200 shots, after tuning on IonQ's free simulator with its noise model on | you have the job ID and a chart comparing hardware with the simulator |
 | 6 | Tell the story | about 2 h | What the sensors cost, what an operator gains, and where quantum honestly stands | you can walk a judge through your results in 5 minutes |
 
 Why a 6-substation piece for hardware: the full 14-substation QAOA circuit needs over 300 two-qubit gates, far more than today's hardware runs well. The piece needs a few dozen.
 
-## What to submit (by Sunday 9:00 AM)
+## What judges look for
 
-**Your notebook:** `starter.ipynb` with the TODOs done, run top to bottom, with your IonQ job IDs.
+Judges visit your team on Sunday morning and ask you to walk them through your work. Understanding and clarity count most: why your cost function works, what QAOA did, and what your results mean for a grid operator. Code counts less. See the [main README](../README.md#what-judges-look-for).
 
-### For the judges' visit and the finalist deck
+**Everything is due Sunday at 9:00 AM** (what to submit, and where, is confirmed at kickoff). Have your notebook and any tools you built, run with their outputs and your IonQ job IDs. Be ready to explain:
+- **Your solution:** where the sensors go, how many, and how much of the grid they see; what happens if one fails; greedy versus integer program versus QAOA; and your hardware result next to the simulator.
+- **Customer and value proposition:** what a sensor costs and what a grid operator gains. A 2014 U.S. Department of Energy report, [Factors Affecting PMU Installation Costs](https://www.energy.gov/oe/articles/factors-affecting-pmu-installation-costs-october-2014), is a good starting point for costs.
+- **What you learned:** where quantum honestly stands on this problem (see below).
+- **What didn't work:** if something failed or you couldn't find a solution, say so clearly and explain why. That earns points.
 
-Judges visit your team on Sunday morning, and selected teams present a 5-slide deck at the closing ceremony (see the [main README](../README.md#judging-and-the-finalist-deck)). Have these ready either way:
+**The notebook is a starter.** Add your own code, cells and notebooks, try a different approach, and expand as far as you like.
 
-- **Solution:** your sensor locations, the count and the coverage (from `check_placement`); what happens if one sensor fails (`breaks_if_lost`, or the N-1 check); greedy vs integer program vs QAOA (count, runtime, how often QAOA finds the best answer); and the hardware result next to the simulator.
-- **Customer and Value Proposition:** what a sensor costs and what a grid operator gains. A 2014 U.S. Department of Energy report, [Factors Affecting PMU Installation Costs](https://www.energy.gov/oe/articles/factors-affecting-pmu-installation-costs-october-2014), is a good starting point for costs.
-- **What We Learned:** where quantum honestly stands on this problem (see below).
+**Tools worth building** (they count):
+- an interactive grid map where you click substations to place sensors and see what's covered;
+- a "what if a sensor fails" explorer;
+- a dashboard that puts greedy, the integer program and QAOA side by side;
+- a visual of QAOA's answers over time, or across noise settings.
 
 ## Hardware rules
 
-- **Tune on simulators first:** the local Aer simulator, then IonQ's free noise simulator (`ionq:ionq:sim:simulator` with `noise_model="aria-1"`). The notebook's hardware cell is set up for this.
+- **Tune on simulators first:** the local Aer simulator, then IonQ's free simulator (`ionq:ionq:sim:simulator`) with `runtime_options={"noise_model": "aria-1"}`. The notebook's hardware cell is set up for this.
 - **Real hardware is IonQ Forte** (`ionq:ionq:qpu:forte-1`) through qBraid. Run only your final, tuned circuit.
 - **Cap every hardware run at 200 shots.**
-- **Hardware runs close Saturday 9 PM.**
+- **Send hardware runs early.** Queues can take hours, so aim for Saturday, not Sunday morning.
 - **If IonQ is down or the queue isn't moving,** keep your job ID and your noisy-simulator result to show judges, and ask a qBraid mentor about IQM Garnet (`aws:iqm:qpu:garnet`) as a backup.
 - Keep the hardware circuit to a few dozen two-qubit gates. The notebook prints the count.
 
@@ -82,9 +88,13 @@ Judges visit your team on Sunday morning, and selected teams present a 5-slide d
 
 ## Honest quantum value
 
-Classical solvers handle grids this size instantly: the integer program in the notebook finds the best placement for 14 substations in milliseconds. In a 2020 study (Jones et al., [arXiv 2001.04489](https://arxiv.org/abs/2001.04489)), a D-Wave quantum annealer matched the best placement on grids up to 30 substations and fell short at 39 and 57.
+Judges reward teams that say plainly where quantum stands, with their own numbers. Answer these in your story:
 
-So quantum computers do not beat classical methods on this problem today. The learning is in building and testing the whole pipeline: turning a grid rule into a cost function, then a circuit, then running it on a simulator and on real hardware, and comparing it honestly with classical methods. Say this plainly in your deck.
+- How long does your integer program take on 14 substations, and on 30? How long does QAOA take, including the hardware queue?
+- How often does QAOA find a best placement, and how often does it leave a substation unseen? How does that compare with guessing at random?
+- What would have to change, in the hardware or in the problem, for quantum to be worth it here?
+
+Reading: Jones et al. 2020 ([arXiv 2001.04489](https://arxiv.org/abs/2001.04489)) tried a D-Wave quantum annealer on this problem for grids of several sizes. What did they find, and does your result agree?
 
 ## Links
 

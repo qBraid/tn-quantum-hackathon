@@ -82,7 +82,7 @@ def brute_force_best(grid, zib=False, n1=False):
     return None, []
 
 
-def check_placement(grid, chosen, zib=False, n1=False, show=True):
+def check_placement(grid, chosen, zib=False, n1=False, show=True, compare=False):
     """Check a placement. `chosen` is a list of bus numbers, for example [1, 6, 9].
 
     Returns a dict with:
@@ -92,7 +92,8 @@ def check_placement(grid, chosen, zib=False, n1=False, show=True):
       coverage        share of buses seen (1.0 is full observability)
       redundancy      total sightings: for each bus, how many sensors see it, summed (higher is sturdier)
       breaks_if_lost  sensors whose failure leaves some bus unseen (None if a bus is already unseen)
-      best, gap       for grids of 20 buses or fewer: the fewest sensors possible, and sensors - best
+      best, gap       only with compare=True, for grids of 20 buses or fewer: the fewest sensors
+                      possible, and sensors - best. Off by default: work out the fewest yourself first.
     """
     chosen = sorted(set(chosen))
     bad = [b for b in chosen if b not in grid["neighbors"]]
@@ -111,7 +112,7 @@ def check_placement(grid, chosen, zib=False, n1=False, show=True):
         report["breaks_if_lost"] = None
     else:
         report["breaks_if_lost"] = [b for b in chosen if not is_valid(grid, [c for c in chosen if c != b], zib)]
-    if len(grid["buses"]) <= 20:
+    if compare and len(grid["buses"]) <= 20:
         key = (tuple(grid["buses"]), tuple(map(tuple, grid["lines"])), tuple(grid["zero_injection"]), zib, n1)
         if key not in _best_cache:
             _best_cache[key] = brute_force_best(grid, zib, n1)[0]

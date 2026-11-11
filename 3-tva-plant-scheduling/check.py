@@ -102,7 +102,10 @@ def locks(plants, history):
 
 def check_hour(plants, demand_mw, reserve_mw, choice, was_on=None, must_on=(), must_off=(),
                verbose=True):
-    """Score one hour's on/off choice against the brute-force best of all 2^n choices.
+    """Score one hour's on/off choice, and say whether it is the best of all 2^n choices.
+
+    The printout tells you "Match!" or "Not the best choice yet." without showing the best choice.
+    The returned dict still has best_choice and best_cost, for code that needs them.
 
     was_on: last hour's on/off (decides who pays a startup). Default: on_at_start.
     must_on / must_off: plant indices locked by min up / min down times (see locks()).
@@ -127,18 +130,17 @@ def check_hour(plants, demand_mw, reserve_mw, choice, was_on=None, must_on=(), m
         if best is None:
             print("No choice meets demand, reserve and the locks this hour.")
         else:
-            print(f"Best choice: {names(best)}  ->  cost ${best_cost:,.0f}")
             print("Match!" if result["matches_best"] else "Not the best choice yet.")
     return result
 
 
 # ------------------------------------------------------------------ a whole day
 def check_schedule(plants, demand, reserve, schedule, milp_cost=None, ramps=False, verbose=True):
-    """Score a schedule (hours x plants, 0/1) and compare it with the MILP optimum.
+    """Score a schedule (hours x plants, 0/1): cost, rules broken and, if you pass milp_cost, the gap.
 
     Returns a dict: valid, total_cost (startup + no-load + energy), the three cost parts,
-    gap_pct vs the MILP optimum, violations (hour, plant, rule, detail), dispatch.
-    milp_cost: pass it to skip re-solving the MILP. ramps=True also checks ramp limits.
+    violations (hour, plant, rule, detail), dispatch, and gap_pct vs milp_cost when you pass one
+    (None otherwise). It doesn't solve the MILP for you. ramps=True also checks ramp limits.
     """
     s = np.asarray(schedule).astype(int)
     T, n = s.shape
@@ -168,12 +170,10 @@ def check_schedule(plants, demand, reserve, schedule, milp_cost=None, ramps=Fals
         violations += _ramp_violations(plants, s, outputs)
     violations.sort(key=lambda v: v[0])
     total = startup + noload + energy
-    if milp_cost is None:
-        milp_cost = solve_milp(plants, demand[:T], reserve[:T], ramps=ramps)[0]
-    gap = 100 * (total - milp_cost) / milp_cost
+    gap = None if milp_cost is None else 100 * (total - milp_cost) / milp_cost
     result = dict(valid=not violations, total_cost=total, startup_cost=startup,
                   no_load_cost=noload, energy_cost=energy, milp_cost=milp_cost,
-                  gap_pct=0.0 if abs(gap) < 1e-6 else gap,
+                  gap_pct=None if gap is None else (0.0 if abs(gap) < 1e-6 else gap),
                   violations=violations, dispatch=outputs)
     if verbose:
         print_report(result)
@@ -212,7 +212,8 @@ def _ramp_violations(plants, s, outputs):
 def print_report(r):
     print(f"Total cost: ${r['total_cost']:,.0f}  (startups ${r['startup_cost']:,.0f}, "
           f"no-load ${r['no_load_cost']:,.0f}, energy ${r['energy_cost']:,.0f})")
-    print(f"MILP optimum: ${r['milp_cost']:,.0f}   gap: {r['gap_pct']:+.2f}%")
+    if r["milp_cost"] is not None:
+        print(f"MILP optimum: ${r['milp_cost']:,.0f}   gap: {r['gap_pct']:+.2f}%")
     if r["valid"]:
         print("Valid: every hour meets demand and reserve; no min up/down rule is broken.")
     else:
@@ -297,7 +298,7 @@ if __name__ == "__main__":
     print(f"MILP solved {len(plants)} plants x {len(demand)} hours in {secs:.3f} s\n")
 
     print("A schedule with every plant on all day:")
-    check_schedule(plants, demand, reserve, np.ones_like(schedule), milp_cost=best)
+    check_schedule(plants, demand, reserve, np.ones_like(schedule))
 
     print("\nOne hour (hour 12, coal and gas CC were on at hour 11), only COAL + GAS_CC on:")
     check_hour(plants, demand[12], reserve[12], [1, 1, 0, 0, 0], was_on=[1, 1, 0, 0, 0])
