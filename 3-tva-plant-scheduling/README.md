@@ -65,11 +65,11 @@ The rules, each hour:
 |---|---|
 | `load_plants()`, `load_demand()` | Read the CSV files |
 | `solve_milp(plants, demand, reserve)` | The classical baseline: an exact mixed-integer program (scipy `milp`). Returns cost, schedule, dispatch, seconds |
-| `check_schedule(plants, demand, reserve, schedule)` | Scores a day: total cost, gap vs the MILP optimum, and a table of broken rules |
-| `check_hour(plants, demand_mw, reserve_mw, choice, was_on=...)` | Scores one hour's on/off choice against the brute-force best of all 32 choices |
+| `check_schedule(plants, demand, reserve, schedule, milp_cost=None)` | Scores a day: total cost and a table of broken rules. Pass `milp_cost` to also see the gap to the optimum |
+| `check_hour(plants, demand_mw, reserve_mw, choice, was_on=...)` | Scores one hour's on/off choice and says whether it's the best of all 32 ("Match!"), without showing the best one |
 | `locks(plants, history)` | Which plants min up/down times force on or off next hour |
 
-Run `python check.py` for a short demo.
+Run `%run check.py` in a notebook cell for a short demo.
 
 ## Milestones
 
@@ -79,7 +79,7 @@ Run `python check.py` for a short demo.
 | 2 | Classical baseline | 2 to 3 h | Run the mixed-integer program for 5 plants over 24 hours (provided; read it). Write the cheapest-plants-first rule (TODO 1). | You have the optimal daily cost and the rule's gap from it. |
 | 3 | Code the quantum cost function | 1 to 2 h | One hour's problem is 5 on/off qubits plus 3 helper (slack) qubits for the safety-margin rule. Write the plant costs (TODO 2) and the QUBO (TODO 3). Check it with the checker. | Its cheapest answer matches the best choice for that hour (the checker prints "Match!"). |
 | 4 | Run it hour by hour | 4 to 5 h | QAOA for each hour on the simulator, carrying results forward. Startup costs and min on/off times are checked classically. Then tune: layers, shots, penalty weight, warm starts. | You have the daily cost vs the baseline and a table of any rules broken. |
-| 5 | IonQ hardware run | ~2 h, by Sat 9 PM | One hour's 8-qubit problem at 100 to 200 shots, after tuning on IonQ's free noise simulator. | You have the job ID and a chart comparing hardware vs simulator. |
+| 5 | IonQ hardware run | ~2 h, early (queues can take hours) | One hour's 8-qubit problem at 100 to 200 shots, after tuning on IonQ's free simulator with its noise model on. | You have the job ID and a chart comparing hardware vs simulator. |
 | 6 | Tell the story | ~2 h | The cost gap, how often answers were valid, time including the hardware queue, and what would have to change for quantum to help. | You can walk a judge through your results in 5 minutes. |
 
 Words you will meet:
@@ -87,24 +87,27 @@ Words you will meet:
 - **Slack (helper) qubits**: extra bits that turn a "≥" rule into an exact equation the QUBO can penalize.
 - **MILP**: mixed-integer linear program, the standard classical tool for this problem.
 
-## What to submit (by Sunday 9:00 AM)
+## What judges look for
 
-**Your notebook:** `starter.ipynb` with your code and outputs, and your IonQ job IDs.
+Judges visit your team on Sunday morning and ask you to walk them through your work. Understanding and clarity count most: why your QUBO works, what the hour-by-hour loop does, and what your results mean for a utility. Code counts less. See the [main README](../README.md#what-judges-look-for).
 
-### For the judges' visit and the finalist deck
+**Have ready by Sunday 9:00 AM** (format details come at kickoff): your notebook and any tools you built, run with their outputs and your IonQ job IDs. Be ready to explain:
+- **Your solution:** your daily cost against the exact baseline and the cheapest-first rule, how often your answers were valid, any rules broken, and the hardware result next to the simulator.
+- **Who it's for:** what a utility like TVA would gain (or not) from your approach, including time spent waiting in the hardware queue.
+- **What you learned:** where quantum honestly stands on this problem (see below).
 
-Judges visit your team on Sunday morning, and selected teams present a 5-slide deck at the closing ceremony (see the [main README](../README.md#judging-and-the-finalist-deck)). Have these ready either way:
-
-- **Solution:** your daily cost against the MILP baseline and the cheapest-first rule, how often your answers were valid, any rules broken, and the hardware result next to the simulator.
-- **Customer and Value Proposition:** what a utility like TVA would gain (or not) from your approach, including time spent waiting in the hardware queue.
-- **What We Learned:** where quantum honestly stands on this problem (see below).
+**Tools worth building** (they count):
+- a schedule viewer: the 24-hour plan as a chart, with every broken rule flagged;
+- a "what if" tool: change demand, fuel prices or the reserve and re-solve;
+- a dashboard that compares the exact solver, your rule and QAOA, including cost and time;
+- a visual of how QAOA's answer for one hour changes with layers, shots or noise.
 
 ## Hardware rules
 
 - Hardware: IonQ Forte through qBraid, device `ionq:ionq:qpu:forte-1`.
-- Tune on the simulator first. Practice on IonQ's free simulator, `ionq:ionq:sim:simulator` with `noise_model` `aria-1` (the notebook's hardware cell is set up for this).
+- Tune on the simulator first. Practice on IonQ's free simulator, `ionq:ionq:sim:simulator`, with `runtime_options={"noise_model": "aria-1"}` (the notebook's hardware cell is set up for this).
 - Run only your final, tuned circuit on hardware. At most 200 shots per hardware run.
-- Hardware runs close **Saturday 9 PM**.
+- Send hardware runs early. Queues can take hours, so aim for Saturday, not Sunday morning.
 - If IonQ is down or the queue isn't moving, keep your job ID and your noisy-simulator result to show judges, and ask a qBraid mentor about IQM Garnet (`aws:iqm:qpu:garnet`) as a backup.
 - The notebook prints your circuit's two-qubit gate count. IonQ advises keeping hardware circuits to a few dozen two-qubit gates, so use one QAOA layer (`p=1`) on hardware.
 
@@ -120,14 +123,16 @@ Judges visit your team on Sunday morning, and selected teams present a 5-slide d
 
 ## Honest quantum value
 
-Say this plainly in your story. It will not cost you points; it earns them.
+Say plainly where quantum stands, with your own numbers. It won't cost you points; it earns them. Answer these in your story:
 
-- Koretsky et al. (2021, [arXiv:2110.12624](https://arxiv.org/abs/2110.12624)) ran QAOA on single-hour unit commitment problems with 6 to 10 plants. They concluded classical solvers handle this well below about 400 plants.
-- A 10-plant, 24-hour version solves in under a tenth of a second classically. Try `solve_milp` on `plants10.csv` and time it.
-- One hour here has only 32 on/off choices. A laptop checks all of them instantly, and a couple hundred random guesses usually find the best one. The notebook runs that random-guess comparison next to QAOA so you can see it.
-- Solving hour by hour misses savings that come from planning the whole day (like starting a plant early to avoid a second startup), however good the per-hour solver is.
+- How long does the exact solver take on 5 plants, and on the 10-plant version? How long does your hour-by-hour QAOA take, including the hardware queue?
+- One hour has 32 on/off choices. How does QAOA compare with simply checking all of them, or with a couple hundred random guesses? The notebook runs a random-guess comparison: what does it tell you, and which step of the loop is really doing the work?
+- What does solving hour by hour miss, compared with planning the whole day at once?
+- What would have to change for quantum to help on unit commitment?
 
-A team that says so, and shows where its hybrid approach lost cost or broke a rule, should score well. So should a team that explains what would have to change for quantum to help.
+Reading: Koretsky et al. (2021, [arXiv:2110.12624](https://arxiv.org/abs/2110.12624)) ran QAOA on single-hour unit commitment with 6 to 10 plants. What did they conclude about when classical solvers stop being enough?
+
+A team that shows where its hybrid approach lost cost or broke a rule, and explains why, should score well.
 
 ## Files
 
@@ -140,8 +145,8 @@ A team that says so, and shows where its hybrid approach lost cost or broke a ru
 
 ## Links
 
-- RTS-GMLC test system: https://github.com/GridMod/RTS-GMLC (TVA's recommended data; see also the [Reliability Test System page](https://www.nlr.gov/grid/reliability-test-system))
-- Smaller MATPOWER instances TVA suggested, such as `case24_ieee_rts`: https://matpower.app/manual/matpower/ExamplematpowerCases.html
+- RTS-GMLC test system: https://github.com/GridMod/RTS-GMLC (TVA's recommended data; see also the [Reliability Test System page](https://www.nlr.gov/grid/reliability-test-system), and Prescient's [guide to the generator file's columns](https://prescient.readthedocs.io/en/stable/reference/file_formats/rts-gmlc/gen.html))
+- Smaller MATPOWER instances TVA suggested, such as `case24_ieee_rts`: https://matpower.app/manual/matpower/ExamplematpowerCases.html (MATPOWER's function and case reference: https://matpower.org/docs/ref/matpower5.0/menu5.0.html)
 - Koretsky et al., "Adapting Quantum Approximation Optimization Algorithm (QAOA) for Unit Commitment", 2021: https://arxiv.org/abs/2110.12624
 - QAOA primer (optional): `../0-warm-up/qaoa_islanding.ipynb`
 - The qBraid Award is open to every team (optional): `../4-qbraid-award/`
