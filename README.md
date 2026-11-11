@@ -11,7 +11,7 @@ Everything runs in qBraid Lab in your browser. There's nothing to install on you
 1. **Join the hackathon's qBraid organization** with the invite link pinned in Discord. That's where your team's credits come from.
 2. **Do the warm-up,** Friday 7:30 to 8:15 PM. It lives in its own repository, [tn-quantum-hackathon-warmup](https://github.com/qBraid/tn-quantum-hackathon-warmup) ([launch it on qBraid](https://account.qbraid.com?gitHubUrl=https://github.com/qBraid/tn-quantum-hackathon-warmup.git)). It isn't scored. It makes sure your account works and your first qBraid job runs before hacking starts.
 3. **Open this repository in qBraid Lab** once track assignments are announced (8:15 PM), with the button above or from the Explore page in your qBraid account.
-4. **Pick the kernel.** Use the qBraid SDK environment's kernel for every notebook here: its name, at the top right of the notebook, includes **qBraid-SDK**. If it says **No Kernel**, click it and pick that kernel; nothing runs until you do. The first cell installs qiskit-aer if it's missing, and stops with a message if you're on a different kernel.
+4. **Pick the kernel.** Use the qBraid SDK environment's kernel for every notebook here: its name, at the top right of the notebook, includes **qBraid**. If it says **No Kernel**, click it and pick that kernel; nothing runs until you do. The first cell installs qiskit-aer if it's missing, stops with a message if you're on a different kernel, and ends with "Setup OK ... You're good to go" when everything's ready.
 
 ## The tracks
 
