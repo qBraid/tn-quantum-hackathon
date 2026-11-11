@@ -53,9 +53,9 @@ Why a 6-substation piece for hardware: the full 14-substation QAOA circuit needs
 
 ## What judges look for
 
-Judges visit your team on Sunday morning and ask you to walk them through your work. Understanding and clarity count most: why your cost function works, what QAOA did, and what your results mean for a grid operator. Code counts less. See the [main README](../README.md#what-judges-look-for).
+On Sunday morning, you present your pitch deck to this track's judges, and they ask you to walk them through your work. Understanding and clarity count most: why your cost function works, what QAOA did, and what your results mean for a grid operator. Code counts less. See the [main README](../README.md#what-judges-look-for).
 
-**Everything is due Sunday at 9:00 AM** (what to submit, and where, is confirmed at kickoff). Have your notebook and any tools you built, run with their outputs and your IonQ job IDs. Be ready to explain:
+**Due Sunday 9:00 AM:** your pitch deck and your code as a ZIP ([what to submit, and where](../README.md#what-to-submit)). Have your notebook and any tools you built, run with their outputs and your IonQ job IDs. Be ready to explain:
 - **Your solution:** where the sensors go, how many, and how much of the grid they see; what happens if one fails; greedy versus integer program versus QAOA; and your hardware result next to the simulator.
 - **Customer and value proposition:** what a sensor costs and what a grid operator gains. A 2014 U.S. Department of Energy report, [Factors Affecting PMU Installation Costs](https://www.energy.gov/oe/articles/factors-affecting-pmu-installation-costs-october-2014), is a good starting point for costs.
 - **What you learned:** where quantum honestly stands on this problem (see below).

@@ -15,7 +15,7 @@ Everything runs in qBraid Lab in your browser. There's nothing to install on you
 
 ## The tracks
 
-Each team works on one track. Tracks are revealed and chosen on Friday at 7:00 PM. Each track takes up to 5 teams and has its own judges.
+Each team works on one track. The problem sets are revealed Friday at 7:15 PM, each team ranks all three, and assignments are announced after the warm-up. Each track has its own judges.
 
 | Folder | Track | The question | Hardware | Good fit for |
 |---|---|---|---|---|
@@ -30,33 +30,46 @@ Every track folder has a `README.md` with the problem, milestones and track-spec
 
 | When | What |
 |---|---|
-| Fri 7:00 PM | Tracks revealed; teams choose |
-| Fri 7:15 PM | qBraid intro, and how judging works |
-| Fri 7:30 PM | Warm-up ([`0-warm-up`](./0-warm-up)) |
-| Fri 8:00 PM | Hacking starts |
+| Fri 5:30 PM | Opening program, then dinner and the group photo |
+| Fri 7:00 PM | The weekend, and how judging works |
+| Fri 7:15 PM | Problem sets revealed; each team ranks its choices |
+| Fri 7:30 PM | Warm-up and qBraid sign-up ([`0-warm-up`](./0-warm-up)), then team assignments |
+| Fri 8:30 PM | Hacking starts |
 | Sat 9:00 to 11:00 AM | TVA internships table |
 | Sat 1:30 PM | Quantinuum technical session |
 | Sat 3:30 PM | CO.LAB session: pitching your project (optional) |
-| Sat 7:00 PM | qBraid tests the submission portal with teams |
-| **Sun 9:00 AM** | **Hard deadline** for final project materials |
-| Sun 10:30 AM | Judges come around and talk with each team |
-| Sun 12:30 PM | Finalists announced |
+| Sat 7:00 PM | qBraid checks in with teams about Sunday's submissions |
+| **Sun 9:00 AM** | **Hard deadline:** pitch deck, code and the optional qBraid Award entry ([what to submit](#what-to-submit)) |
+| Sun 10:30 AM | Teams present to their track's judges |
+| Sun 12:20 PM | Finalists announced |
 | Sun 1:00 PM | Closing ceremony at The Landing Social House. Finalists present from 1:35 PM; winners and the qBraid Award are announced around 2:15 PM |
+
+## What to submit
+
+**Sunday 9:00 AM is a hard deadline.** One person submits for the whole team.
+
+| What | Who | Where |
+|---|---|---|
+| **Your pitch deck** for the judges: the problem, the customer, your solution and its value | Every team | Submission link: *coming soon, and pinned in Discord* <!-- Bryan: put the pitch deck and code submission link here --> |
+| **Your code**, as a ZIP of your track folder (put your own notebooks and tools in it too) | Every team | The same submission link |
+| **qBraid Award entry** (optional): a link to your video and a link to your 3 slides | Any team that enters | [qBraid Award form](https://docs.google.com/forms/d/e/1FAIpQLSeeom5YX0jADpt1a09Xox9EUQYPtJYoaggeVy-1iX4VT3yY9g/viewform) ([details](./4-qbraid-award)) |
+
+- **Make the ZIP** in a qBraid Lab terminal, from the repo folder: `python -m zipfile -c our-team.zip 2-tva-sensor-placement` (use your track's folder and your team's name). Then right-click the ZIP in the file browser and choose Download.
+- **Check every link before you submit.** Set sharing to "anyone with the link can view", then open the link in a private browser window to make sure it works. Judges can't score what they can't open.
+- **Bring your deck to your judging slot** on a USB stick or your laptop.
 
 ## What judges look for
 
-**Everything is due Sunday at 9:00 AM.** What to submit, and where, is confirmed at kickoff, and the link goes in Discord.
-
-Judges visit your team on Sunday morning. They look at:
+On Sunday morning, each team presents its pitch deck to its track's judges. They look at:
 
 - **Your understanding.** Everyone on the team should be able to explain what you did, why, and what your results mean, in plain words.
 - **Your presentation:** the problem, the customer (who has this problem), your solution, and the value proposition (what it's worth to them).
 - **The tools you build.** An interactive view of your grid, a dashboard that compares your quantum and classical answers, a checker that stress-tests a schedule, a visual that shows BB84 catching a spy. Each track's README has ideas.
 - **Honesty.** Say plainly where quantum helps and where it doesn't yet. If something failed, or you couldn't find a solution, say so clearly and explain why. A clear account of what didn't work earns points.
 
-Code counts less than any of these. Record every hardware job ID: it's your proof of what ran.
+Code counts less than any of these: judges give it a quick look to see what you built. Record every hardware job ID: it's your proof of what ran.
 
-**Finalists** (announced Sunday 12:30 PM) present at the closing ceremony. The organizers will share the format.
+**Finalists** (announced Sunday 12:20 PM) present at the closing ceremony. The organizers will share the format.
 
 ## The notebooks are starters
 

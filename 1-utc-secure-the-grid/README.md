@@ -68,7 +68,7 @@ Rules:
 
 ## What judges look for
 
-Judges visit your team on Sunday morning. They look at:
+On Sunday morning, you present your pitch deck to this track's judges. They look at:
 - **Your understanding:** why your approach works, and can you explain it to someone who isn't an expert?
 - **Your presentation:** the problem, the customer (the utility and the people who run its network), your solution (your network design from Step 3) and its value to them.
 - **Whether it works**, and the tools you build around it.
@@ -76,7 +76,7 @@ Judges visit your team on Sunday morning. They look at:
 
 A design that uses only post-quantum cryptography can score just as well as one with QKD everywhere, if you justify it. Code counts less than understanding and clarity. See the [main README](../README.md#what-judges-look-for).
 
-**Everything is due Sunday at 9:00 AM** (what to submit, and where, is confirmed at kickoff). Have your notebooks, any tools you built, your hardware job IDs, and your written answers to each Part, labeled by step and Part (for example, "Step 1, Part 3").
+**Due Sunday 9:00 AM:** your pitch deck and your code as a ZIP ([what to submit, and where](../README.md#what-to-submit)). Have your notebooks, any tools you built, your hardware job IDs, and your written answers to each Part, labeled by step and Part (for example, "Step 1, Part 3").
 
 **The notebooks are starters.** Add your own code, cells and notebooks, and expand as far as you like. The stretch goals above show some ways to bring in ideas from the warm-up.
 
