@@ -11,7 +11,7 @@ Everything runs in qBraid Lab in your browser. There's nothing to install on you
 1. **Join the hackathon's qBraid organization** with the invite link pinned in Discord. That's where your team's credits come from.
 2. **Open this repository in qBraid Lab** with the button above, or from the Explore page in your qBraid account.
 3. **Pick the kernel.** Use the qBraid SDK environment's kernel for every notebook here (Kernel > Change Kernel). The first cell installs qiskit-aer if it's missing, and stops with a message if you're on the wrong kernel.
-4. **Do the warm-up** in [`0-warm-up`](./0-warm-up). It takes about 20 minutes and isn't scored. It makes sure your account, credits and hardware access all work before hacking starts.
+4. **Do the warm-up** in [`0-warm-up`](./0-warm-up), Friday 7:30 to 8:15 PM. It isn't scored. It makes sure your account, credits and hardware access all work before hacking starts.
 
 ## The tracks
 
@@ -33,7 +33,8 @@ Every track folder has a `README.md` with the problem, milestones and track-spec
 | Fri 5:30 PM | Opening program, then dinner and the group photo |
 | Fri 7:00 PM | The weekend, and how judging works |
 | Fri 7:15 PM | Problem sets revealed; each team ranks its choices |
-| Fri 7:30 PM | Warm-up and qBraid sign-up ([`0-warm-up`](./0-warm-up)), then team assignments |
+| Fri 7:30 PM | Warm-up and qBraid sign-up ([`0-warm-up`](./0-warm-up)) |
+| Fri 8:15 PM | Team assignments announced |
 | Fri 8:30 PM | Hacking starts |
 | Sat 9:00 to 11:00 AM | TVA internships table |
 | Sat 1:30 PM | Quantinuum technical session |
@@ -42,7 +43,7 @@ Every track folder has a `README.md` with the problem, milestones and track-spec
 | **Sun 9:00 AM** | **Hard deadline:** pitch deck, code and the optional qBraid Award entry ([what to submit](#what-to-submit)) |
 | Sun 10:30 AM | Teams present to their track's judges |
 | Sun 12:20 PM | Finalists announced |
-| Sun 1:00 PM | Closing ceremony at The Landing Social House. Finalists present from 1:35 PM; winners and the qBraid Award are announced around 2:15 PM |
+| Sun 1:00 PM | Closing ceremony at The Landing Social House: doors open at 1:00 and the program starts at 1:30. The 6 finalists present from 1:37 PM, the qBraid Award is announced at 2:10 PM, and the winners at 2:15 PM |
 
 ## What to submit
 
@@ -69,7 +70,7 @@ On Sunday morning, each team presents its pitch deck to its track's judges. They
 
 Code counts less than any of these: judges give it a quick look to see what you built. Record every hardware job ID: it's your proof of what ran.
 
-**Finalists** (announced Sunday 12:20 PM) present at the closing ceremony. The organizers will share the format.
+**Finalists:** 6 teams, announced Sunday at 12:20 PM, each present for 4 minutes at the closing ceremony.
 
 ## The notebooks are starters
 

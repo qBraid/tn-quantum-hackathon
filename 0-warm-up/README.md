@@ -1,6 +1,6 @@
 # Warm-up: setup check
 
-**Friday, 7:30 PM. About 20 minutes. Not scored.**
+**Friday, 7:30 to 8:15 PM, after qBraid sign-up. Not scored.**
 
 The point is to hit any login, kernel or credit problem now, not at midnight. These notebooks come from UTC's problem set.
 
