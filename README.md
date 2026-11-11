@@ -45,17 +45,22 @@ Every track folder has a `README.md` with the problem, milestones and track-spec
 
 ## What judges look for
 
-The organizers share the final rubric and the submission details at kickoff, and the submission link goes in Discord. Here's what we know now:
+**Everything is due Sunday at 9:00 AM.** What to submit, and where, is confirmed at kickoff, and the link goes in Discord.
 
-- **Understanding and clarity count most.** Judges visit your team on Sunday morning and ask you to walk them through your work. Everyone on the team should be able to say what you did, why, and what your results mean, in plain words.
-- **Code counts less than what you can show with it.** A simple approach you can explain beats a pile of code nobody on the team understands.
-- **Build tools, not just notebooks.** Tools you build count: an interactive view of your grid, a dashboard that compares your quantum and classical answers, a checker that stress-tests a schedule, a visual that shows BB84 catching a spy. Each track's README has ideas.
-- **Be honest about quantum.** Say plainly where it helps and where it doesn't yet. That earns points.
-- **Record every hardware job ID.** It's your proof of what ran.
+Judges visit your team on Sunday morning. They look at:
 
-**Have ready by Sunday 9:00 AM:** your notebooks and any tools you built, run with their outputs, plus your job IDs. Secure the Grid teams also need their written answers. Format details come at kickoff.
+- **Your understanding.** Everyone on the team should be able to explain what you did, why, and what your results mean, in plain words.
+- **Your presentation:** the problem, the customer (who has this problem), your solution, and the value proposition (what it's worth to them).
+- **The tools you build.** An interactive view of your grid, a dashboard that compares your quantum and classical answers, a checker that stress-tests a schedule, a visual that shows BB84 catching a spy. Each track's README has ideas.
+- **Honesty.** Say plainly where quantum helps and where it doesn't yet. If something failed, or you couldn't find a solution, say so clearly and explain why. A clear account of what didn't work earns points.
+
+Code counts less than any of these. Record every hardware job ID: it's your proof of what ran.
 
 **Finalists** (announced Sunday 12:30 PM) present at the closing ceremony. The organizers will share the format.
+
+## The notebooks are starters
+
+They get you going; they aren't the whole job. Add your own code, cells and notebooks, change the approach, build tools around them, and go as far as you like. Ideas from the warm-up are fair game in any track. For example, Secure the Grid's stretch goals can reuse the warm-up's quantum random number generator, Grover's search or QAOA.
 
 ## Running on quantum hardware
 

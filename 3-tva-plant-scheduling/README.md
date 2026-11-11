@@ -91,10 +91,13 @@ Words you will meet:
 
 Judges visit your team on Sunday morning and ask you to walk them through your work. Understanding and clarity count most: why your QUBO works, what the hour-by-hour loop does, and what your results mean for a utility. Code counts less. See the [main README](../README.md#what-judges-look-for).
 
-**Have ready by Sunday 9:00 AM** (format details come at kickoff): your notebook and any tools you built, run with their outputs and your IonQ job IDs. Be ready to explain:
+**Everything is due Sunday at 9:00 AM** (what to submit, and where, is confirmed at kickoff). Have your notebook and any tools you built, run with their outputs and your IonQ job IDs. Be ready to explain:
 - **Your solution:** your daily cost against the exact baseline and the cheapest-first rule, how often your answers were valid, any rules broken, and the hardware result next to the simulator.
-- **Who it's for:** what a utility like TVA would gain (or not) from your approach, including time spent waiting in the hardware queue.
+- **Customer and value proposition:** what a utility like TVA would gain (or not) from your approach, including time spent waiting in the hardware queue.
 - **What you learned:** where quantum honestly stands on this problem (see below).
+- **What didn't work:** if something failed or you couldn't find a solution, say so clearly and explain why. That earns points.
+
+**The notebook is a starter.** Add your own code, cells and notebooks, try a different approach, and expand as far as you like.
 
 **Tools worth building** (they count):
 - a schedule viewer: the 24-hour plan as a chart, with every broken rule flagged;

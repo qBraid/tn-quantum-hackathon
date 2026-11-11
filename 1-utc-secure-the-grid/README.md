@@ -27,6 +27,7 @@ Two substations need a shared secret key to encrypt the data between them. Quant
 - **Part 3. Hardware and thresholds.** Run the protocol on real hardware and report the error rate from hardware noise alone. The notebook packs 16 rounds into one circuit, so this is **one job**, not one job per qubit. Then answer in a few sentences: how should a utility set a threshold that separates a real eavesdropper from normal line noise? (IonQ's noisy simulator shows almost no errors on BB84, because BB84 has no two-qubit gates. The error rate from hardware noise has to come from the real QPU.)
 - **Part 4. Why physics wins (written).** In one short paragraph, explain why BB84's security comes from physics, and what classical key exchange can't match.
 - **Stretch.** Run your protocol on two different simulator backends through qBraid and show the error rate is consistent. Ask a qBraid mentor which second simulator is free.
+- **Stretch, from the warm-up.** Use the warm-up's quantum random number generator ([`qrng_randomness.ipynb`](../0-warm-up/qrng_randomness.ipynb)) to make Alice's bits and bases, so the key's randomness comes from physics too. How does that change what an attacker could predict?
 
 ## Step 2: Size up the threat (Shor's algorithm and post-quantum cryptography)
 
@@ -37,6 +38,7 @@ Much of today's security, including the grid's, relies on RSA and elliptic-curve
 - **Part 3. Exposure map (written).** List the utility systems that rely on RSA or elliptic-curve cryptography, and so are exposed. Consider SCADA control links, remote-access VPNs and firmware-update signing.
 - **Part 4. Migration plan (written).** Propose a move to NIST's post-quantum standards: [ML-KEM (FIPS 203)](https://csrc.nist.gov/pubs/fips/203/final) for key exchange and [ML-DSA (FIPS 204)](https://csrc.nist.gov/pubs/fips/204/final) for signatures. Rank what the utility should fix first, and explain why.
 - **Stretch.** Identify systems that are hard to patch, such as field devices with long lifespans, and explain why they need attention now.
+- **Stretch, from the warm-up.** Grover's search ([`grover_find_the_fault.ipynb`](../0-warm-up/grover_find_the_fault.ipynb)) also weakens symmetric encryption such as AES, because it searches keys in about the square root of the time. What key length does that mean the utility should use, and why is that easier to fix than RSA?
 
 ## Step 3: Design the network (capstone)
 
@@ -47,6 +49,7 @@ Now put it together. Securing a metro-scale grid network takes more than one too
 - **Part 3. Working prototype.** Build and run one link on qBraid: reuse your BB84 from Step 1, or finish the teleportation link in the notebook (its last cell runs it on IonQ's free simulator).
 - **Part 4. Rollout plan.** A phased plan: what the utility deploys first, next and later, and why.
 - **Stretch.** A short cost-versus-security argument aimed at the utility's board.
+- **Stretch, from the warm-up.** Use QAOA ([`qaoa_islanding.ipynb`](../0-warm-up/qaoa_islanding.ipynb)) to choose which links get quantum keys under a fixed budget, and compare it with a classical choice.
 
 ## Hardware
 
@@ -65,11 +68,17 @@ Rules:
 
 ## What judges look for
 
-Judges visit your team on Sunday morning. They look for three things: do you understand why your approach works, can you explain it to someone who isn't an expert, and does it work. A design that uses only post-quantum cryptography can score just as well as one with QKD everywhere, if you justify it. Code counts less than understanding and clarity. See the [main README](../README.md#what-judges-look-for).
+Judges visit your team on Sunday morning. They look at:
+- **Your understanding:** why your approach works, and can you explain it to someone who isn't an expert?
+- **Your presentation:** the problem, the customer (the utility and the people who run its network), your solution (your network design from Step 3) and its value to them.
+- **Whether it works**, and the tools you build around it.
+- **Honesty:** if something failed or you couldn't find a solution, say so clearly and explain why.
 
-**Have ready by Sunday 9:00 AM** (format details come at kickoff):
-1. **Your notebooks and tools**, run with their outputs and your hardware job IDs.
-2. **Written answers** to each Part, labeled by step and Part (for example, "Step 1, Part 3") so judges can follow along.
+A design that uses only post-quantum cryptography can score just as well as one with QKD everywhere, if you justify it. Code counts less than understanding and clarity. See the [main README](../README.md#what-judges-look-for).
+
+**Everything is due Sunday at 9:00 AM** (what to submit, and where, is confirmed at kickoff). Have your notebooks, any tools you built, your hardware job IDs, and your written answers to each Part, labeled by step and Part (for example, "Step 1, Part 3").
+
+**The notebooks are starters.** Add your own code, cells and notebooks, and expand as far as you like. The stretch goals above show some ways to bring in ideas from the warm-up.
 
 **Tools worth building** (they count):
 - an interactive BB84 demo where you add an eavesdropper and watch the error rate jump;
