@@ -41,7 +41,7 @@ from make_visual import make_visual
 make_visual({"Simulator": sim_counts, "IonQ": hw_counts}, title="Our results")   # or just one counts dict
 ```
 
-Use the names your notebook already has: plant scheduling `make_visual({"Simulator": sim_counts, "IonQ": counts})`; sensor placement `make_visual({"IonQ": counts})`; BB84 and Grover `make_visual({"Simulator": counts, "IonQ": hw_counts})`; QRNG `make_visual({"IonQ": hw_counts})`.
+Use the names your notebook already has: plant scheduling `make_visual({"Simulator": sim_counts, "IonQ": counts})`; sensor placement `make_visual({"IonQ": counts})`; BB84 and Grover `make_visual({"Simulator": counts, "IonQ": hw_counts})`.
 
 1. **The cell writes `visual.html`,** an animated bar chart, in the same folder as your notebook.
 2. **Open it next to your notebook** in qBraid Lab's Agent Canvas panel. Run this from a Lab terminal in that folder:

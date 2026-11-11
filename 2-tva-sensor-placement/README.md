@@ -23,8 +23,7 @@ TVA shared NERC's *Reliability Guideline: PMU Placement and Installation* (Decem
 1. Open `starter.ipynb` in qBraid Lab with the qBraid SDK environment's kernel.
 2. Run the cells from the top.
 3. Do the TODOs (there are 3). Each one has a hint.
-
-Optional QAOA primer: `../0-warm-up/qaoa_islanding.ipynb`.
+4. Before milestone 3, work through [`qaoa_primer.ipynb`](./qaoa_primer.ipynb) (about 1 hour): QAOA on a small Max-Cut problem, the same pattern you'll use for sensor placement.
 
 ## The data
 
@@ -44,7 +43,7 @@ A *bus* is a substation. Each file lists the buses, the lines, the zero-injectio
 |---|---|---|---|---|
 | 1 | Understand it | about 1 h | Draw the grid and place sensors by hand | you have a placement and one sentence on what a PMU sees |
 | 2 | Classical baseline | 2 to 3 h | A greedy rule and an exact integer program | you have the optimal count and its runtime |
-| 3 | Code the quantum cost function | 1 to 2 h | The number of sensors plus a large penalty for every unseen substation. Check it with the checker on the 6-substation piece. | its cheapest answer matches the integer program |
+| 3 | Code the quantum cost function | 2 to 3 h | First work through `qaoa_primer.ipynb` (QAOA on a small Max-Cut problem). Then write the cost: the number of sensors plus a large penalty for every unseen substation. Check it with the checker on the 6-substation piece. | its cheapest answer matches the integer program |
 | 4 | Run QAOA | 3 to 4 h | On the simulator: first the 6-substation piece, then all 14 | you have a chart of how often QAOA finds an optimal placement and how often it leaves a substation unseen |
 | 5 | IonQ hardware run | about 2 h, early (queues can take hours) | The 6-substation piece at 100 to 200 shots, after tuning on IonQ's free simulator with its noise model on | you have the job ID and a chart comparing hardware with the simulator |
 | 6 | Tell the story | about 2 h | What the sensors cost, what an operator gains, and where quantum honestly stands | you can walk a judge through your results in 5 minutes |

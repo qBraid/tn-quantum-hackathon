@@ -9,9 +9,9 @@ Everything runs in qBraid Lab in your browser. There's nothing to install on you
 ## Start here (Friday evening)
 
 1. **Join the hackathon's qBraid organization** with the invite link pinned in Discord. That's where your team's credits come from.
-2. **Open this repository in qBraid Lab** with the button above, or from the Explore page in your qBraid account.
-3. **Pick the kernel.** Use the qBraid SDK environment's kernel for every notebook here (Kernel > Change Kernel). The first cell installs qiskit-aer if it's missing, and stops with a message if you're on the wrong kernel.
-4. **Do the warm-up** in [`0-warm-up`](./0-warm-up), Friday 7:30 to 8:15 PM. It isn't scored. It makes sure your account, credits and hardware access all work before hacking starts.
+2. **Do the warm-up,** Friday 7:30 to 8:15 PM. It lives in its own repository, [tn-quantum-hackathon-warmup](https://github.com/qBraid/tn-quantum-hackathon-warmup) ([launch it on qBraid](https://account.qbraid.com?gitHubUrl=https://github.com/qBraid/tn-quantum-hackathon-warmup.git)). It isn't scored. It makes sure your account, credits and hardware access all work before hacking starts.
+3. **Open this repository in qBraid Lab** once teams are announced (8:15 PM), with the button above or from the Explore page in your qBraid account.
+4. **Pick the kernel.** Use the qBraid SDK environment's kernel for every notebook here (Kernel > Change Kernel). The first cell installs qiskit-aer if it's missing, and stops with a message if you're on the wrong kernel.
 
 ## The tracks
 
@@ -33,7 +33,7 @@ Every track folder has a `README.md` with the problem, milestones and track-spec
 | Fri 5:30 PM | Opening program, then dinner and the group photo |
 | Fri 7:00 PM | The weekend, and how judging works |
 | Fri 7:15 PM | Problem sets revealed; each team ranks its choices |
-| Fri 7:30 PM | Warm-up and qBraid sign-up ([`0-warm-up`](./0-warm-up)) |
+| Fri 7:30 PM | Warm-up and qBraid sign-up ([warm-up repo](https://github.com/qBraid/tn-quantum-hackathon-warmup)) |
 | Fri 8:15 PM | Team assignments announced |
 | Fri 8:30 PM | Hacking starts |
 | Sat 9:00 to 11:00 AM | TVA internships table |
@@ -74,7 +74,7 @@ Code counts less than any of these: judges give it a quick look to see what you 
 
 ## The notebooks are starters
 
-They get you going; they aren't the whole job. Add your own code, cells and notebooks, change the approach, build tools around them, and go as far as you like. Ideas from the warm-up are fair game in any track. For example, Secure the Grid's stretch goals can reuse the warm-up's quantum random number generator, Grover's search or QAOA.
+They get you going; they aren't the whole job. Add your own code, cells and notebooks, change the approach, build tools around them, and go as far as you like. Ideas from the warm-up and the other tracks are fair game. For example, Secure the Grid's stretch goals reuse the warm-up's quantum random number generator and the TVA tracks' QAOA primer.
 
 ## Running on quantum hardware
 

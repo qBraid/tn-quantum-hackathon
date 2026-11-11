@@ -40,7 +40,7 @@ A pizzeria with several ovens. Big ovens are cheap per pizza but take hours to p
 1. Open `starter.ipynb` in qBraid Lab with the qBraid SDK environment's kernel.
 2. Run the cells from the top. They load the data, plot it and solve the classical baseline.
 3. Fill in the TODOs: **TODO 1** cheapest-first rule, **TODO 2** cost of one plant for one hour, **TODO 3** the QUBO. Every cell after them already works and uses your code.
-4. New to QAOA? The optional primer is `../0-warm-up/qaoa_islanding.ipynb`.
+4. Before milestone 3, work through [`qaoa_primer.ipynb`](./qaoa_primer.ipynb) (about 1 hour): QAOA on a small Max-Cut problem, the same pattern you'll use for each hour's schedule.
 
 ## The data
 
@@ -77,7 +77,7 @@ Run `%run check.py` in a notebook cell for a short demo.
 |---|---|---|---|---|
 | 1 | Understand it | ~1 h | Plot demand. Hand-schedule the 5 plants for 6 hours (in the notebook or a spreadsheet). | You have a schedule and its cost. |
 | 2 | Classical baseline | 2 to 3 h | Run the mixed-integer program for 5 plants over 24 hours (provided; read it). Write the cheapest-plants-first rule (TODO 1). | You have the optimal daily cost and the rule's gap from it. |
-| 3 | Code the quantum cost function | 1 to 2 h | One hour's problem is 5 on/off qubits plus 3 helper (slack) qubits for the safety-margin rule. Write the plant costs (TODO 2) and the QUBO (TODO 3). Check it with the checker. | Its cheapest answer matches the best choice for that hour (the checker prints "Match!"). |
+| 3 | Code the quantum cost function | 2 to 3 h | First work through `qaoa_primer.ipynb` (QAOA on a small Max-Cut problem). Then: one hour's problem is 5 on/off qubits plus 3 helper (slack) qubits for the safety-margin rule. Write the plant costs (TODO 2) and the QUBO (TODO 3). Check it with the checker. | Its cheapest answer matches the best choice for that hour (the checker prints "Match!"). |
 | 4 | Run it hour by hour | 4 to 5 h | QAOA for each hour on the simulator, carrying results forward. Startup costs and min on/off times are checked classically. Then tune: layers, shots, penalty weight, warm starts. | You have the daily cost vs the baseline and a table of any rules broken. |
 | 5 | IonQ hardware run | ~2 h, early (queues can take hours) | One hour's 8-qubit problem at 100 to 200 shots, after tuning on IonQ's free simulator with its noise model on. | You have the job ID and a chart comparing hardware vs simulator. |
 | 6 | Tell the story | ~2 h | The cost gap, how often answers were valid, time including the hardware queue, and what would have to change for quantum to help. | You can walk a judge through your results in 5 minutes. |
@@ -151,5 +151,5 @@ A team that shows where its hybrid approach lost cost or broke a rule, and expla
 - RTS-GMLC test system: https://github.com/GridMod/RTS-GMLC (TVA's recommended data; see also the [Reliability Test System page](https://www.nlr.gov/grid/reliability-test-system), and Prescient's [guide to the generator file's columns](https://prescient.readthedocs.io/en/stable/reference/file_formats/rts-gmlc/gen.html))
 - Smaller MATPOWER instances TVA suggested, such as `case24_ieee_rts`: https://matpower.app/manual/matpower/ExamplematpowerCases.html (MATPOWER's function and case reference: https://matpower.org/docs/ref/matpower5.0/menu5.0.html)
 - Koretsky et al., "Adapting Quantum Approximation Optimization Algorithm (QAOA) for Unit Commitment", 2021: https://arxiv.org/abs/2110.12624
-- QAOA primer (optional): `../0-warm-up/qaoa_islanding.ipynb`
+- QAOA primer (part of milestone 3): [`qaoa_primer.ipynb`](./qaoa_primer.ipynb)
 - The qBraid Award is open to every team (optional): `../4-qbraid-award/`
