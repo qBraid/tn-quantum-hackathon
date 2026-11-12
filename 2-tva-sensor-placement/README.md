@@ -4,9 +4,9 @@
 
 ## The problem
 
-TVA's grid is a network of substations joined by power lines. A PMU (phasor measurement unit) is a sensor that takes time-synchronized measurements, so operators can tell what state the grid is in. A PMU at a substation sees that substation and every substation directly connected to it.
+TVA's grid is a network of substations joined by power lines. A PMU (phasor measurement unit) is a sensor that takes time-synchronized measurements, so operators can tell what state the grid is in. In the simple model used here, a PMU at a substation sees that substation and every substation directly connected to it. (The model assumes the needed measurements and line data are available. It doesn't test communications or data quality: say what TVA would check before installing anything.)
 
-PMUs are expensive. **What is the smallest set of substations that lets operators see every substation?**
+PMUs are expensive to install. **What is the smallest set of substations that lets operators see every substation?**
 
 **Everyday version:** put security cameras at intersections so that every intersection is visible from at least one camera. Computer scientists call this the *minimum dominating set* problem. It maps naturally onto qubits: one qubit per substation, where 1 means "put a sensor here".
 
@@ -24,6 +24,7 @@ TVA shared NERC's *Reliability Guideline: PMU Placement and Installation* (Decem
 2. Run the cells from the top.
 3. Do the TODOs (there are 3). Each one has a hint.
 4. Early on, one teammate works through [`qaoa_primer.ipynb`](./qaoa_primer.ipynb) (the 6-node part, about 45 minutes) while the rest start milestones 1 and 2. It shows QAOA's three pieces (cost layer, mixer, optimizer) on a textbook problem, Max-Cut.
+5. **Start your deck now.** One teammate reads [`background/`](./background/) and owns the customer questions in "Customer and value proposition" below. Bring them to a TVA mentor.
 
 ## The data
 
@@ -39,14 +40,16 @@ A *bus* is an electrical node in a substation; in these files there's one per su
 
 ## Milestones
 
+Times are suggested team time, including reading and experiments. Once your TODOs are in, the notebook runs in about a minute: spend the rest understanding the results, testing your own question, and building the pitch.
+
 | # | Milestone | Time | What you do | Done when |
 |---|---|---|---|---|
-| 1 | Understand it | about 1 h | Draw the grid and place sensors by hand | you have a placement and one sentence on what a PMU sees |
+| 1 | Understand it | about 1 h | Draw the grid and place sensors by hand. Pick one PMU application from NERC's guideline (in [`background/`](./background/)) and find out who uses it | you have a placement, one sentence on what a PMU sees, and the application your team is designing for |
 | 2 | Classical baseline | 2 to 3 h | A greedy rule and an exact integer program | you have the optimal count and its runtime |
 | 3 | Code the quantum cost function | 1 to 2 h | The number of sensors plus a large penalty for every unseen substation. Check it with the checker on the 6-substation piece. | its cheapest answer matches the integer program, and you can say in one sentence how the primer's Max-Cut cost relates to yours |
 | 4 | Run QAOA | 3 to 4 h | On the simulator: first the 6-substation piece, then all 14 | you have a chart of how often QAOA finds an optimal placement and how often it leaves a substation unseen |
-| 5 | IonQ hardware run | about 2 h, early (queues can take hours) | The 6-substation piece at 100 to 200 shots, after tuning on IonQ's free simulator with its noise model on | you have the job ID and a chart comparing hardware with the simulator |
-| 6 | Tell the story | about 2 h | What the sensors cost, what an operator gains, and where quantum honestly stands | you can walk a judge through your results in 5 minutes |
+| 5 | IonQ hardware run | about 2 h, early (queues can take hours) | The 6-substation piece at 100 to 200 shots, after tuning on IonQ's free simulator with its noise model on. Recommended: run the same circuit on Quantinuum's free H2 emulator too. | you have the job IDs and a chart comparing hardware with the simulator, with Quantinuum's emulator alongside if you ran it. |
+| 6 | Tell the story | all weekend, plus 2 to 3 h at the end | Your five slides: what the sensors cost, what an operator gains, what happens if one fails, and where quantum honestly stands | you can walk a judge through your slides in the time the organizers give you |
 
 Why a 6-substation piece for hardware: the full 14-substation QAOA circuit needs over 300 two-qubit gates per layer, far more than today's hardware runs well. The piece needs a few dozen.
 
@@ -56,7 +59,7 @@ On Sunday morning, you present your pitch deck to this track's judges, and they 
 
 **Due Sunday 9:00 AM:** your pitch deck and your code as a ZIP ([what to submit, and where](../README.md#what-to-submit)). Have your notebook and any tools you built, run with their outputs and your IonQ job IDs. Be ready to explain:
 - **Your solution:** where the sensors go, how many, and how much of the grid they see; what happens if one fails; greedy versus integer program versus QAOA; and your hardware result next to the simulator.
-- **Customer and value proposition:** what a sensor costs and what a grid operator gains. A 2014 U.S. Department of Energy report, [Factors Affecting PMU Installation Costs](https://www.energy.gov/oe/articles/factors-affecting-pmu-installation-costs-october-2014), is a good starting point for costs.
+- **Customer and value proposition:** who uses PMU data at a utility, and who approves the money? Ask a TVA mentor, or mark your guesses as guesses. What does a PMU cost installed? A 2014 U.S. Department of Energy report, [Factors Affecting PMU Installation Costs](https://www.energy.gov/oe/articles/factors-affecting-pmu-installation-costs-october-2014), found that the average installed cost per PMU ranged from 40,000 to 180,000 dollars, and the device itself was usually under 5% of that. What does one fewer PMU save, and what does an operator gain from full coverage? Don't count savings the classical integer program already gets as a quantum benefit.
 - **What you learned:** where quantum honestly stands on this problem (see below).
 - **What didn't work:** if something failed or you couldn't find a solution, say so clearly and explain why. That earns points.
 
@@ -74,6 +77,8 @@ On Sunday morning, you present your pitch deck to this track's judges, and they 
 - **Real hardware is IonQ Forte** (`ionq:ionq:qpu:forte-1`) through qBraid. Run only your final, tuned circuit.
 - **Cap every hardware run at 200 shots.**
 - **Send hardware runs early.** Queues can take hours, so aim for Saturday, not Sunday morning.
+- **Free second opinion: Quantinuum's H2 emulator** (`quantinuum:quantinuum:sim:h2-emulator`). It models different hardware noise, readout error included. Run your tuned circuit there too and compare (the notebook's qBraid cell has the lines; accept Quantinuum's terms under Devices first). Label it as an emulator.
+- **If `ionq:ionq:qpu:forte-1` shows as unavailable,** the same machine is on qBraid through AWS (`aws:ionq:qpu:forte-1`, about 1,630 credits for 200 shots).
 - **If IonQ is down or the queue isn't moving,** keep your job ID and your noisy-simulator result to show judges, and ask a qBraid mentor about IQM Garnet (`aws:iqm:qpu:garnet`) as a backup.
 - Keep the hardware circuit to a few dozen two-qubit gates. The notebook prints the count.
 

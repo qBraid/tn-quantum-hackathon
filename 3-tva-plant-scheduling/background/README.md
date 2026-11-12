@@ -5,6 +5,7 @@ TVA (the Tennessee Valley Authority) wrote two problems for this hackathon. This
 | File | What it is |
 |---|---|
 | This page | TVA's problem, word for word, and what changed for this event |
+| | In qBraid Lab, open the two files below from the file browser on the left (their links work on GitHub) |
 | [`TVA-Unit-Commitment-and-Economic-Dispatch-Overview.md`](./TVA-Unit-Commitment-and-Economic-Dispatch-Overview.md) | TVA's overview of how utilities decide which plants run and how much each produces (Nov 2). The track README's [Background from TVA](../README.md#background-from-tva) sums it up. Useful for your value story: the cost components, the constraints, and how the decision is made |
 | [`TVA-Generic-Data-for-Hackathon.md`](./TVA-Generic-Data-for-Hackathon.md) | TVA's note on which open data to use (Nov 2). It recommends RTS-GMLC, which is where this track's data comes from |
 

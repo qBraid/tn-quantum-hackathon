@@ -76,7 +76,7 @@ Economic dispatch allocates load among the committed units. In the simplest view
 
 > **Simplified thermal marginal cost**
 >
-> Marginal cost ($/MWh) = Heat rate (fuel units/MWh) × Fuel price ($/fuel unit) + Variable O&M + Emissions cost. Startup and no-load costs are especially important in unit commitment because they affect whether it is economical to turn a unit on or keep it running.
+> Marginal cost (dollars/MWh) = Heat rate (fuel units/MWh) × Fuel price (dollars/fuel unit) + Variable O&M + Emissions cost. Startup and no-load costs are especially important in unit commitment because they affect whether it is economical to turn a unit on or keep it running.
 
 ## 6. Operational and Reliability Constraints
 

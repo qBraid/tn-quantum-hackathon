@@ -8,7 +8,7 @@ UTC (the University of Tennessee at Chattanooga) wrote these problems for this h
 
 ## Where each UTC problem went
 
-UTC's set let each team pick one or two problems by level. For this event, Problems 3, 4 and 6 form one track, and the rest moved elsewhere.
+UTC's set let each team pick one or two problems by level. For this event, Problems 1, 3, 4 and 6 form one track (Problem 1 is Step 2, Part 5), and Problems 2 and 5 moved elsewhere.
 
 | UTC problem | Where it is now |
 |---|---|
@@ -28,4 +28,5 @@ The Parts of Problems 3, 4 and 6 are UTC's, almost word for word. The changes:
 - **Problem 4 factors 15** (UTC offered 15 or 21), and the notebook lists qBraid's devices for you.
 - **Problems 2 and 5 aren't scored.** Problem 2 is a worked example for the TVA tracks, and its GPU scale-up is optional. Problem 5 is the warm-up, with nothing to submit.
 - **Hardware:** use your team's qBraid credits. The problem set's step "link your Open Quantum account" doesn't apply. See [Hardware](../README.md#hardware).
+- **The PDF's last page is UTC's note to the organizers, not a task.** There's no separate utility profile or grid scenario to find: you choose your own network in Step 3.
 - **What you submit:** one pitch deck and a ZIP of your code per team, with your written answers in a `WRITEUP.md` labeled by Step and Part. UTC's set asked for a written response and a 5-slide presentation per problem. See [what to submit](../../README.md#what-to-submit).

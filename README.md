@@ -12,6 +12,8 @@ Everything runs in qBraid Lab in your browser. There's nothing to install on you
 2. **Do the warm-up,** Friday 7:30 to 8:15 PM. It lives in its own repository, [tn-quantum-hackathon-warmup](https://github.com/qBraid/tn-quantum-hackathon-warmup) ([launch it on qBraid](https://account.qbraid.com?gitHubUrl=https://github.com/qBraid/tn-quantum-hackathon-warmup.git)). It isn't scored. It makes sure your account works and your first qBraid job runs before hacking starts.
 3. **Open this repository in qBraid Lab** once track assignments are announced (8:15 PM), with the button above or from the Explore page in your qBraid account.
 4. **Pick the kernel.** When you open a notebook, a **Select Kernel** box appears with *Python 3 (ipykernel)* already selected. Change it to **qBraid-SDK (v0.12.2)** and click **Select**. Do this for every notebook here. Picked the wrong one? Click the kernel name at the top right of the notebook and change it. Don't see qBraid-SDK (v0.12.2) in the list? Ask a qBraid mentor: it takes a few minutes to install. The first cell installs qiskit-aer if it's missing, stops with a message if you're on a different kernel, and ends with "Setup OK ... You're good to go" when everything's ready.
+5. **Keep Lab from shutting down on you.** By default qBraid Lab asks "Session Ending Soon" every hour (click **Yes, Continue**), shuts down after 15 idle minutes, and shuts down after 2 hours. You can change all three in **Settings** at the bottom left of Lab (*Session check-ins*, *Idle timeout*, *Auto shutdown*). Your notebooks are saved either way: after a shutdown, relaunch Lab and rerun the cells.
+6. **Start your pitch deck tonight.** Sketch the five slides below now and fill them in as you learn. While teammates run the notebooks, one teammate starts on the customer and value questions in your track's README.
 
 ## The tracks
 
@@ -20,8 +22,8 @@ Each team works on one track. The problem sets are revealed Friday at 7:15 PM, e
 | Folder | Track | The question | Hardware | Good fit for |
 |---|---|---|---|---|
 | [`1-utc-secure-the-grid`](./1-utc-secure-the-grid) | **Secure the Grid** (UTC) | Catch an eavesdropper with quantum keys, size up the quantum threat to today's encryption, and design a secure grid network | IonQ (plus Quantinuum emulators) | Cybersecurity, CS |
-| [`2-tva-sensor-placement`](./2-tva-sensor-placement) | **Grid Sensor Placement** (TVA) | What's the fewest sensors that let operators see every substation? | IonQ Forte | EE, CS |
-| [`3-tva-plant-scheduling`](./3-tva-plant-scheduling) | **Power Plant Scheduling** (TVA) | Which power plants should run each hour, at the lowest cost? | IonQ Forte | EE, CS, math |
+| [`2-tva-sensor-placement`](./2-tva-sensor-placement) | **Grid Sensor Placement** (TVA) | What's the fewest sensors that let operators see every substation? | IonQ Forte, plus Quantinuum's free emulator | EE, CS |
+| [`3-tva-plant-scheduling`](./3-tva-plant-scheduling) | **Power Plant Scheduling** (TVA) | Which power plants should run each hour, at the lowest cost? | IonQ Forte, plus Quantinuum's free emulator | EE, CS, math |
 | [`4-qbraid-award`](./4-qbraid-award) | **qBraid Award** (optional, any team) | The most creative use of qBraid, on top of your track | Any | Everyone |
 
 Every track folder has a `README.md` with the problem, milestones and track-specific details, plus starter notebooks. Open the README first. Each track's `background/` folder holds the problem as UTC or TVA first wrote it, the reading they shared, and what changed for this event.
@@ -68,7 +70,14 @@ On Sunday morning, each team presents its pitch deck to its track's judges. The 
 - **The tools you build.** An interactive view of your grid, a dashboard that compares your quantum and classical answers, a checker that stress-tests a schedule, a visual that shows BB84 catching a spy. Each track's README has ideas.
 - **Honesty.** Say plainly where quantum helps and where it doesn't yet. If something failed, or you couldn't find a solution, say so clearly and explain why. A clear account of what didn't work earns points.
 
-Code counts less than any of these: judges give it a quick look to see what you built. Record every hardware job ID: it's your proof of what ran.
+**Five slides cover it:**
+1. **Problem:** what goes wrong today, and why it matters.
+2. **Customer:** who has the problem, what it costs them now, and who would decide to use your solution.
+3. **Solution:** what you built, with your quantum and classical results side by side.
+4. **Value:** what it's worth to the customer, in numbers, with sources. Label your guesses as guesses.
+5. **What we learned:** where quantum helps, where it doesn't yet, and what failed.
+
+Code counts less than any of these: judges give it a quick look to see what you built. Keep a run record for your deck: device, job ID, shots and status for every cloud run, labeled simulator, emulator or QPU, including any that failed or are still queued. It's your proof of what ran.
 
 **Finalists:** 6 teams, announced Sunday at 12:20 PM, each present for 4 minutes at the closing ceremony.
 
@@ -81,7 +90,7 @@ They get you going; they aren't the whole job. Add your own code, cells and note
 - **Practice for free first.** IonQ's simulator on qBraid (`ionq:ionq:sim:simulator`) costs nothing. Its `noise_model` option adds IonQ's gate noise, which mostly shows up on circuits with many two-qubit gates. Most starter notebooks have a cell ready to go.
 - **Then run on the real thing.** Swap in your track's QPU, such as IonQ Forte (`ionq:ionq:qpu:forte-1`). Real runs use credits, so tune on the simulator first and cap each run at 200 shots. Your team's credits are meant for your track's hardware run: do that first, and ask a mentor before any other paid run. Queues can take hours, so send hardware runs early: aim for Saturday, not Sunday morning.
 - **For a cheaper run, or if IonQ is down or its queue isn't moving,** try Rigetti Cepheus (`aws:rigetti:qpu:cepheus-1-108q`, about 40 credits for 200 shots) or IQM Garnet (`aws:iqm:qpu:garnet`, about 60). If `ionq:ionq:qpu:forte-1` shows as unavailable, the same IonQ Forte is also on qBraid through AWS (`aws:ionq:qpu:forte-1`, about 1,630 credits for 200 shots). Prices are from the device catalog on Nov 11. Ask a qBraid mentor before switching.
-- **Quantinuum emulators (Secure the Grid).** This event has Quantinuum's emulators (for example `quantinuum:quantinuum:sim:h2-emulator`), which model its hardware. First open the Quantinuum page under Devices in your qBraid account, read each of Quantinuum's documents and accept their terms. You only do this once; until you accept, Quantinuum jobs are refused. Then run on them through qBraid like any other device.
+- **Quantinuum's emulator (every track; Quantinuum sponsors this event).** `quantinuum:quantinuum:sim:h2-emulator` is **free** on qBraid. It models Quantinuum's H2 trapped-ion computer, noise and readout error included, so it gives you a second, hardware-like run next to IonQ (up to 26 qubits; jobs took 1 to 4 minutes in our tests). Each notebook's qBraid cell has the lines. First open the Quantinuum page under Devices in your qBraid account and accept Quantinuum's terms: you only do this once, and until you do, Quantinuum jobs are refused. It's an emulator, so label its results that way, not as hardware. Bring your questions to Quantinuum's technical session, Saturday at 1:30 PM.
 - **Record every job ID.** It's your proof of the run.
 - **Check prices and live status** for every device in the [device catalog](https://account.qbraid.com/devices).
 
