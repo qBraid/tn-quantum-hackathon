@@ -111,7 +111,7 @@ On Sunday morning, you present your pitch deck to this track's judges, and they 
 ## Hardware rules
 
 - Hardware: IonQ Forte through qBraid, device `ionq:ionq:qpu:forte-1`.
-- Tune on the simulator first. Practice on IonQ's free simulator, `ionq:ionq:sim:simulator`, with `runtime_options={"noise_model": "forte-1"}` (the notebook's hardware cell is set up for this).
+- Tune on the simulator first: Aer (Qiskit's simulator, running inside your Lab instance: instant and free, but its runs don't reach your Jobs page). Then practice on IonQ's free simulator, `ionq:ionq:sim:simulator`, with `runtime_options={"noise_model": "forte-1"}` (the notebook's hardware cell is set up for this).
 - Run only your final, tuned circuit on hardware. At most 200 shots per hardware run.
 - Send hardware runs early. Queues can take hours, so aim for Saturday, not Sunday morning.
 - Free second opinion: Quantinuum's H2 emulator (`quantinuum:quantinuum:sim:h2-emulator`). It models different hardware noise, readout error included. Run your tuned circuit there too and compare (the notebook's qBraid cell has the lines; accept Quantinuum's terms under Devices first). Label it as an emulator.
@@ -122,7 +122,7 @@ On Sunday morning, you present your pitch deck to this track's judges, and they 
 ## Stretch goals (pick any)
 
 - **10 plants.** Use `data/plants10.csv` and `data/demand10.csv`. How many slack qubits does the safety-margin rule need now?
-- **Two hours at once.** Put two consecutive hours in one QUBO (16 qubits, more with 10 plants) so QAOA can see startup costs across hours. Bigger versions need qBraid's GPU simulator.
+- **Two hours at once.** Put two consecutive hours in one QUBO (16 qubits, more with 10 plants) so QAOA can see startup costs across hours. Bigger versions need qBraid's GPU simulator (`qbraid:qbraid:sim:gpu-sv`, up to 35 qubits).
 - **Ramp limits.** `solve_milp(..., ramps=True)` and `check_schedule(..., ramps=True)` add them. The RTS-GMLC ramp rates are generous for 1-hour steps, so try tightening them and see what changes. Heads-up: `check_schedule` sets each hour's outputs on its own (cheapest first), so once ramps bind it can flag the MILP's own schedule as "ramp broken" and show a negative gap. Use the dispatch and cost that `solve_milp` returns, or extend the checker to dispatch with ramps (a good tool to build).
 - **A battery.** Add a storage unit (charge, discharge, state of charge) to the MILP, then decide how it would enter your hour-by-hour loop.
 - **Wind and solar.** Subtract RTS-GMLC's hourly wind and solar output from demand to get *net load*, then schedule against that. TVA's overview flags the evening ramp, when solar fades, as a growing challenge.

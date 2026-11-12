@@ -73,7 +73,7 @@ On Sunday morning, you present your pitch deck to this track's judges, and they 
 
 ## Hardware rules
 
-- **Tune on simulators first:** the local Aer simulator, then IonQ's free simulator (`ionq:ionq:sim:simulator`) with `runtime_options={"noise_model": "forte-1"}`. The notebook's hardware cell is set up for this.
+- **Tune on simulators first:** Aer (Qiskit's simulator, running inside your Lab instance: instant and free, but its runs don't reach your Jobs page), then IonQ's free simulator (`ionq:ionq:sim:simulator`) with `runtime_options={"noise_model": "forte-1"}`. The notebook's hardware cell is set up for this.
 - **Real hardware is IonQ Forte** (`ionq:ionq:qpu:forte-1`) through qBraid. Run only your final, tuned circuit.
 - **Cap every hardware run at 200 shots.**
 - **Send hardware runs early.** Queues can take hours, so aim for Saturday, not Sunday morning.
@@ -88,7 +88,7 @@ On Sunday morning, you present your pitch deck to this track's judges, and they 
 - **N-1 (every substation seen twice).** The grid stays fully visible if any one sensor fails. Use `check_placement(grid, chosen, n1=True)` and `ilp_placement(grid, twice=True)`. For QAOA, penalize each missing sighting: P × (2 − sightings) for a substation seen fewer than twice, with P > 1. (A flat penalty for "seen only once" lets invalid placements tie for best.)
 - **Fixed budget.** With only *k* sensors (try k = 2 or 3 on IEEE 14), place them to see as many substations as possible. This is the second goal in NERC's guideline. How does the cost function change when you can't afford full coverage?
 - **Priority weights.** Some substations matter more, such as big loads, power plants and the links between regions. Build a small priority table the way NERC's guideline suggests (a weight per application, times whether a PMU at that bus serves it), then use the weights where they can matter: with a fixed budget (k sensors, maximize the weighted substations seen), or by requiring high-priority substations to be seen twice. (A bigger penalty alone won't move the best placement when every substation can be covered.) See how the placement changes.
-- **30 substations on qBraid's GPU simulator.** Load `data/ieee30.json`. The exact table of 2^30 costs no longer fits in memory, so switch to sampled shots.
+- **30 substations on qBraid's GPU simulator** (`qbraid:qbraid:sim:gpu-sv`, up to 35 qubits; free up to a daily limit, then 5 credits a minute). Load `data/ieee30.json`. The exact table of 2^30 costs no longer fits in memory, so switch to sampled shots.
 
 ## Honest quantum value
 
