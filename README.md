@@ -24,7 +24,7 @@ Each team works on one track. The problem sets are revealed Friday at 7:15 PM, e
 | [`3-tva-plant-scheduling`](./3-tva-plant-scheduling) | **Power Plant Scheduling** (TVA) | Which power plants should run each hour, at the lowest cost? | IonQ Forte | EE, CS, math |
 | [`4-qbraid-award`](./4-qbraid-award) | **qBraid Award** (optional, any team) | The most creative use of qBraid, on top of your track | Any | Everyone |
 
-Every track folder has a `README.md` with the problem, milestones and track-specific details, plus starter notebooks. Open the README first. Each track's `original/` folder holds the problem as UTC or TVA first wrote it, with their support documents and a note on what changed for this event.
+Every track folder has a `README.md` with the problem, milestones and track-specific details, plus starter notebooks. Open the README first. Each track's `background/` folder holds the problem as UTC or TVA first wrote it, the reading they shared, and what changed for this event.
 
 ## Key times (Eastern)
 
