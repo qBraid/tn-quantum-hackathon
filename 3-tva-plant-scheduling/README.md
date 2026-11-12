@@ -16,7 +16,7 @@ What drives the choices:
 
 ## Background from TVA
 
-TVA shared an overview of how utilities make these decisions. The short version:
+TVA shared an overview of how utilities make these decisions. It's in [`background/`](./background/) in full, with TVA's original problem in TVA's words. The short version:
 
 1. **Forecast** load, wind and solar.
 2. **Set the requirements:** the energy needed each hour, plus reserves for surprises.
@@ -50,11 +50,11 @@ A pizzeria with several ovens. Big ovens are cheap per pizza but take hours to p
 | `data/demand.csv` | 24 hourly demand values (MW) and the reserve (10% of demand) |
 | `data/plants10.csv`, `data/demand10.csv` | The 10-plant stretch version |
 
-Every plant is built from a real unit in the RTS-GMLC test grid, with its real startup cost, min on/off times, ramp rate and fuel costs. `data/README.md` explains the source, license and every step of how the numbers were made.
+Every plant is built from a real unit in the RTS-GMLC test grid: its real fuel costs and min on/off times, with its size, startup cost and ramp rate scaled to fit the puzzle. `data/README.md` explains the source, license and every step of how the numbers were made.
 
 The rules, each hour:
 - Every plant that is on makes between its `pmin_mw` and `pmax_mw`, and total output equals demand.
-- The capacity of the plants that are on (sum of `pmax_mw`) is at least demand + reserve.
+- The capacity of the plants that are on (sum of `pmax_mw`) is at least demand + reserve. (This is spinning reserve: plants that are off don't count.)
 - A plant that switches on stays on at least `min_up_h` hours. One that switches off stays off at least `min_down_h` hours.
 - At midnight only COAL is running.
 - Daily cost = startup costs + no-load costs + energy costs.
@@ -78,12 +78,12 @@ Run `%run check.py` in a notebook cell for a short demo.
 | 1 | Understand it | ~1 h | Plot demand. Hand-schedule the 5 plants for 6 hours (in the notebook or a spreadsheet). | You have a schedule and its cost. |
 | 2 | Classical baseline | 2 to 3 h | Run the mixed-integer program for 5 plants over 24 hours (provided; read it). Write the cheapest-plants-first rule (TODO 1). | You have the optimal daily cost and the rule's gap from it. |
 | 3 | Code the quantum cost function | 1 to 2 h | One hour's problem is 5 on/off qubits plus 3 helper (slack) qubits for the safety-margin rule. Write the plant costs (TODO 2) and the QUBO (TODO 3). Check it with the checker. | Its cheapest answer matches the best choice for that hour (the checker prints "Match!"), and you can say in one sentence how the primer's Max-Cut cost relates to yours. |
-| 4 | Run it hour by hour | 4 to 5 h | QAOA for each hour on the simulator, carrying results forward. Startup costs and min on/off times are checked classically. Then tune: layers, shots, penalty weight, warm starts. | You have the daily cost vs the baseline and a table of any rules broken. |
+| 4 | Run it hour by hour | 4 to 5 h | QAOA for each hour on the simulator, carrying results forward. Startup costs and min on/off times are checked classically. Then find out what QAOA adds: run QAOA and random guessing at 5, 10, 20, 50 and 200 shots, over at least 5 seeds each, before you tune layers, penalty weight or warm starts. | You have the daily cost vs the baseline, a table of any rules broken, and a QAOA-vs-random table across shots and seeds that you can explain. |
 | 5 | IonQ hardware run | ~2 h, early (queues can take hours) | One hour's 8-qubit problem at 100 to 200 shots, after tuning on IonQ's free simulator with its noise model on. | You have the job ID and a chart comparing hardware vs simulator. |
 | 6 | Tell the story | ~2 h | The cost gap, how often answers were valid, time including the hardware queue, and what would have to change for quantum to help. | You can walk a judge through your results in 5 minutes. |
 
 Words you will meet:
-- **QUBO**: a cost function over 0/1 variables with only single and pair terms. QAOA needs the problem in this form.
+- **QUBO**: a cost function over 0/1 variables with only single and pair terms. The QAOA code in the notebook takes the problem in this form.
 - **Slack (helper) qubits**: extra bits that turn a "≥" rule into an exact equation the QUBO can penalize.
 - **MILP**: mixed-integer linear program, the standard classical tool for this problem.
 
@@ -93,7 +93,7 @@ On Sunday morning, you present your pitch deck to this track's judges, and they 
 
 **Due Sunday 9:00 AM:** your pitch deck and your code as a ZIP ([what to submit, and where](../README.md#what-to-submit)). Have your notebook and any tools you built, run with their outputs and your IonQ job IDs. Be ready to explain:
 - **Your solution:** your daily cost against the exact baseline and the cheapest-first rule, how often your answers were valid, any rules broken, and the hardware result next to the simulator.
-- **Customer and value proposition:** what a utility like TVA would gain (or not) from your approach, including time spent waiting in the hardware queue.
+- **Customer and value proposition:** what a utility like TVA would gain (or not) from your approach, including time spent waiting in the hardware queue. For scale: this toy day costs about $328,000 at a 700 MW peak. What would a 1% or a 7% gap mean over a year for a utility whose peak is tens of gigawatts? (A utility's annual report lists its fuel and purchased-power costs.)
 - **What you learned:** where quantum honestly stands on this problem (see below).
 - **What didn't work:** if something failed or you couldn't find a solution, say so clearly and explain why. That earns points.
 
@@ -118,11 +118,11 @@ On Sunday morning, you present your pitch deck to this track's judges, and they 
 
 - **10 plants.** Use `data/plants10.csv` and `data/demand10.csv`. How many slack qubits does the safety-margin rule need now?
 - **Two hours at once.** Put two consecutive hours in one QUBO (16 qubits, more with 10 plants) so QAOA can see startup costs across hours. Bigger versions need qBraid's GPU simulator.
-- **Ramp limits.** `solve_milp(..., ramps=True)` and `check_schedule(..., ramps=True)` add them. The RTS-GMLC ramp rates are generous for 1-hour steps, so try tightening them and see what changes.
+- **Ramp limits.** `solve_milp(..., ramps=True)` and `check_schedule(..., ramps=True)` add them. The RTS-GMLC ramp rates are generous for 1-hour steps, so try tightening them and see what changes. Heads-up: `check_schedule` sets each hour's outputs on its own (cheapest first), so once ramps bind it can flag the MILP's own schedule as "ramp broken" and show a negative gap. Use the dispatch and cost that `solve_milp` returns, or extend the checker to dispatch with ramps (a good tool to build).
 - **A battery.** Add a storage unit (charge, discharge, state of charge) to the MILP, then decide how it would enter your hour-by-hour loop.
 - **Wind and solar.** Subtract RTS-GMLC's hourly wind and solar output from demand to get *net load*, then schedule against that. TVA's overview flags the evening ramp, when solar fades, as a growing challenge.
 - **Drop the helper qubits.** Replace the slack penalty with a penalty-only formulation (search "unbalanced penalization QAOA"). Compare qubits, two-qubit gates and how often answers are valid.
-- **A better hour cost.** TODO 2's cost is an approximation. Improve it and measure how often the QUBO's best matches the exact best.
+- **A better hour cost.** TODO 2's cost is an approximation. On the 5-plant fleet it picks the true best every hour we tested; on the 10-plant fleet it often doesn't. Measure how often the QUBO's best matches the exact best there, then improve it.
 
 ## Honest quantum value
 
@@ -146,11 +146,11 @@ A team that shows where its hybrid approach lost cost or broke a rule, and expla
 | `qaoa_primer.ipynb` | QAOA on Max-Cut, the textbook example (milestone 3; the 12-node part is optional) |
 | `check.py` | Data loader, schedule checker, MILP baseline |
 | `data/` | Plants, demand, source and license notes |
-| `original/` | TVA's original problem, its two support documents, and what changed for this event |
+| `background/` | TVA's original problem, its two background documents, and what changed for this event |
 
 ## Links
 
-- TVA's original problem, its support documents and what changed: [`original/`](./original/)
+- TVA's original problem, its background documents and what changed: [`background/`](./background/)
 - RTS-GMLC test system: https://github.com/GridMod/RTS-GMLC (TVA's recommended data; see also the [Reliability Test System page](https://www.nlr.gov/grid/reliability-test-system), and Prescient's [guide to the generator file's columns](https://prescient.readthedocs.io/en/stable/reference/file_formats/rts-gmlc/gen.html))
 - Smaller MATPOWER instances TVA suggested, such as `case24_ieee_rts`: https://matpower.app/manual/matpower/ExamplematpowerCases.html (MATPOWER's function and case reference: https://matpower.org/docs/ref/matpower5.0/menu5.0.html)
 - Koretsky et al., "Adapting Quantum Approximation Optimization Algorithm (QAOA) for Unit Commitment", 2021: https://arxiv.org/abs/2110.12624
