@@ -100,7 +100,8 @@ Reading: Jones et al. 2020 ([arXiv 2001.04489](https://arxiv.org/abs/2001.04489)
 - MATPOWER IEEE 14-bus case: <https://github.com/MATPOWER/matpower/blob/master/data/case14.m>
 - MATPOWER IEEE 30-bus case: <https://github.com/MATPOWER/matpower/blob/master/data/case_ieee30.m>
 - UW Power Systems Test Case Archive (the original IEEE cases): <https://labs.ece.uw.edu/pstca/>
-- Background reading from TVA: NERC's *Reliability Guideline: PMU Placement and Installation* (December 2016)
+- Background reading from TVA: NERC's *Reliability Guideline: PMU Placement and Installation* (December 2016), in [`original/`](./original/)
+- TVA's original problem and what changed for this event: [`original/`](./original/)
 - Data sources TVA pointed to:
   - an [IEEE overview of PMU placement](https://ieeexplore.ieee.org/document/7459248)
   - [IEEE 14-bus PMU measurements at optimal and sub-optimal locations](https://ieee-dataport.org/documents/pmu-measurements-optimal-sub-optimal-locations-ieee-14-bus-system) (IEEE DataPort)

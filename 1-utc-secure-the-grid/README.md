@@ -4,7 +4,7 @@
 
 A city-scale utility like Chattanooga's EPB runs a fiber network linking its substations and control centers. Two threats hang over it. Someone could be listening on a link right now. And an attacker could record encrypted traffic today and decrypt it years from now on a quantum computer. This track takes you through both, one step at a time, and ends with your design for the whole network.
 
-These problems come from UTC (Problems 1, 3, 4 and 6 of its problem set).
+These problems come from UTC (Problems 1, 3, 4 and 6 of its problem set). UTC's original problem set and starter notebooks are in [`original/`](./original/), with a note on what changed.
 
 ## Start here
 
@@ -91,6 +91,7 @@ Also open to your team: the [qBraid Award](../4-qbraid-award) for the most creat
 
 ## Links
 
+- UTC's original problem set, starter notebooks and what changed: [`original/`](./original/)
 - [qBraid device catalog](https://account.qbraid.com/devices) (qubit counts, prices, status)
 - [NIST post-quantum cryptography](https://csrc.nist.gov/projects/post-quantum-cryptography)
 - [EPB Quantum Network](https://quantum.epb.com) (Chattanooga's commercial quantum network)

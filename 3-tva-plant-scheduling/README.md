@@ -146,9 +146,11 @@ A team that shows where its hybrid approach lost cost or broke a rule, and expla
 | `qaoa_primer.ipynb` | QAOA on Max-Cut, the textbook example (milestone 3; the 12-node part is optional) |
 | `check.py` | Data loader, schedule checker, MILP baseline |
 | `data/` | Plants, demand, source and license notes |
+| `original/` | TVA's original problem, its two support documents, and what changed for this event |
 
 ## Links
 
+- TVA's original problem, its support documents and what changed: [`original/`](./original/)
 - RTS-GMLC test system: https://github.com/GridMod/RTS-GMLC (TVA's recommended data; see also the [Reliability Test System page](https://www.nlr.gov/grid/reliability-test-system), and Prescient's [guide to the generator file's columns](https://prescient.readthedocs.io/en/stable/reference/file_formats/rts-gmlc/gen.html))
 - Smaller MATPOWER instances TVA suggested, such as `case24_ieee_rts`: https://matpower.app/manual/matpower/ExamplematpowerCases.html (MATPOWER's function and case reference: https://matpower.org/docs/ref/matpower5.0/menu5.0.html)
 - Koretsky et al., "Adapting Quantum Approximation Optimization Algorithm (QAOA) for Unit Commitment", 2021: https://arxiv.org/abs/2110.12624
