@@ -89,6 +89,7 @@ On Sunday morning, you present your pitch deck to this track's judges, and they 
 - **Fixed budget.** With only *k* sensors (try k = 2 or 3 on IEEE 14), place them to see as many substations as possible. This is the second goal in NERC's guideline. How does the cost function change when you can't afford full coverage?
 - **Priority weights.** Some substations matter more, such as big loads, power plants and the links between regions. Build a small priority table the way NERC's guideline suggests (a weight per application, times whether a PMU at that bus serves it), then use the weights where they can matter: with a fixed budget (k sensors, maximize the weighted substations seen), or by requiring high-priority substations to be seen twice. (A bigger penalty alone won't move the best placement when every substation can be covered.) See how the placement changes.
 - **30 substations on qBraid's GPU simulator** (`qbraid:qbraid:sim:gpu-sv`, up to 35 qubits; free up to a daily limit, then 5 credits a minute). Load `data/ieee30.json`. The exact table of 2^30 costs no longer fits in memory, so switch to sampled shots.
+- **TVA's other grids: IEEE 57, 118 and 300** (`data/ieee57.json`, `data/ieee118.json`, `data/ieee300.json`). Try your methods on them: the integer program still solves them in milliseconds, but QAOA needs one qubit per substation. What would quantum need to help at this size?
 
 ## Honest quantum value
 

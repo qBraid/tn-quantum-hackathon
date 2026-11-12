@@ -40,7 +40,7 @@ TVA's problem was written for teams with power-systems and quantum experience. M
 
 | TVA's original | This track |
 |---|---|
-| A selected IEEE case (14, 57, 118 or 300 buses) | IEEE 14 as the main grid, a 6-substation piece of it for hardware, and IEEE 30 as a stretch goal |
+| A selected IEEE case (14, 57, 118 or 300 buses) | IEEE 14 as the main grid and a 6-substation piece of it for hardware. IEEE 30, 57, 118 and 300 are stretch goals |
 | Full observability, including zero-injection bus rules | Full observability is the core problem. Zero-injection buses are a stretch goal |
 | Optional redundancy (N-1, one PMU fails) | A stretch goal, also part of your story ("what happens if one sensor fails") |
 | Weighted "critical bus" priorities | A stretch goal: weight buses the way NERC's guideline suggests, then use the weights with a fixed sensor budget, or require key buses to be seen twice |
