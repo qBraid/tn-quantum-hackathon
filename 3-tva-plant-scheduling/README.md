@@ -37,7 +37,7 @@ A pizzeria with several ovens. Big ovens are cheap per pizza but take hours to p
 
 ## Start here
 
-1. Open `starter.ipynb` in qBraid Lab with the qBraid SDK environment's kernel.
+1. Open `starter.ipynb` in qBraid Lab with the **qBraid-SDK (v0.12.2)** kernel (pick it in the Select Kernel box).
 2. Run the cells from the top. They load the data, plot it and solve the classical baseline.
 3. Fill in the TODOs: **TODO 1** cheapest-first rule, **TODO 2** cost of one plant for one hour, **TODO 3** the QUBO. Every cell after them already works and uses your code.
 4. Early on, one teammate works through [`qaoa_primer.ipynb`](./qaoa_primer.ipynb) (the 6-node part, about 45 minutes) while the rest start milestones 1 and 2. It shows QAOA's three pieces (cost layer, mixer, optimizer) on a textbook problem, Max-Cut.

@@ -8,7 +8,7 @@ These problems come from UTC (Problems 1, 3, 4 and 6 of its problem set). UTC's 
 
 ## Start here
 
-1. Open [`1_bb84_eavesdropper.ipynb`](./1_bb84_eavesdropper.ipynb) with the qBraid SDK environment's kernel and run the cells.
+1. Open [`1_bb84_eavesdropper.ipynb`](./1_bb84_eavesdropper.ipynb) with the **qBraid-SDK (v0.12.2)** kernel (pick it in the Select Kernel box) and run the cells.
 2. Fill in the `TODO`s. Each one has a hint.
 3. Split the team. Steps 1 and 2 don't depend on each other, so some of you can work on BB84 while others take Shor and Grover, and someone starts the written Parts. Step 3 brings it all together.
 

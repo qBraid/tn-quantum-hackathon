@@ -20,7 +20,7 @@ TVA shared NERC's *Reliability Guideline: PMU Placement and Installation* (Decem
 
 ## Start here
 
-1. Open `starter.ipynb` in qBraid Lab with the qBraid SDK environment's kernel.
+1. Open `starter.ipynb` in qBraid Lab with the **qBraid-SDK (v0.12.2)** kernel (pick it in the Select Kernel box).
 2. Run the cells from the top.
 3. Do the TODOs (there are 3). Each one has a hint.
 4. Early on, one teammate works through [`qaoa_primer.ipynb`](./qaoa_primer.ipynb) (the 6-node part, about 45 minutes) while the rest start milestones 1 and 2. It shows QAOA's three pieces (cost layer, mixer, optimizer) on a textbook problem, Max-Cut.
