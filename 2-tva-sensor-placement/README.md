@@ -12,7 +12,7 @@ PMUs are expensive. **What is the smallest set of substations that lets operator
 
 ## Background from TVA
 
-TVA shared NERC's *Reliability Guideline: PMU Placement and Installation* (December 2016) as background for this track. Three ideas from it shape the problem:
+TVA shared NERC's *Reliability Guideline: PMU Placement and Installation* (December 2016) as background for this track. It's in [`background/`](./background/), with TVA's original problem in TVA's words. Three ideas from it shape the problem:
 
 1. **There are two ways to state the goal.** You can find the fewest PMUs that make the whole grid observable, which is milestones 2 to 5. Or you can find the most observability you can get from a fixed number of PMUs, which is the "fixed budget" stretch goal.
 2. **Losing one PMU, or its data feed, can leave part of the grid unseen.** That's why utilities plan for redundancy, which is the N-1 stretch goal.
@@ -33,7 +33,7 @@ TVA shared NERC's *Reliability Guideline: PMU Placement and Installation* (Decem
 | `data/ieee14_piece6.json` | A 6-substation piece of it, small enough for quantum hardware |
 | `data/ieee30.json` | IEEE 30-bus test grid, for the stretch goal |
 
-A *bus* is a substation. Each file lists the buses, the lines, the zero-injection buses (see stretch goals), the power plant buses and each bus's load. See `data/README.md` for sources.
+A *bus* is an electrical node in a substation; in these files there's one per substation. Each file lists the buses, the lines, the zero-injection buses (see stretch goals), the power plant buses and each bus's load. See `data/README.md` for sources.
 
 `check.py` checks any placement: is it valid, which substations are unseen, and how sturdy it is. Once you have your own answer, `check_placement(grid, chosen, compare=True)` also says how far it is from the fewest possible (grids of 20 buses or fewer). Run `%run check.py` in a notebook cell for a demo.
 
@@ -48,7 +48,7 @@ A *bus* is a substation. Each file lists the buses, the lines, the zero-injectio
 | 5 | IonQ hardware run | about 2 h, early (queues can take hours) | The 6-substation piece at 100 to 200 shots, after tuning on IonQ's free simulator with its noise model on | you have the job ID and a chart comparing hardware with the simulator |
 | 6 | Tell the story | about 2 h | What the sensors cost, what an operator gains, and where quantum honestly stands | you can walk a judge through your results in 5 minutes |
 
-Why a 6-substation piece for hardware: the full 14-substation QAOA circuit needs over 300 two-qubit gates, far more than today's hardware runs well. The piece needs a few dozen.
+Why a 6-substation piece for hardware: the full 14-substation QAOA circuit needs over 300 two-qubit gates per layer, far more than today's hardware runs well. The piece needs a few dozen.
 
 ## What judges look for
 
@@ -80,9 +80,9 @@ On Sunday morning, you present your pitch deck to this track's judges, and they 
 ## Stretch goals (pick any)
 
 - **Zero-injection buses.** A zero-injection bus has no load and no generator, so the power flowing in equals the power flowing out. That lets operators work out one unseen neighbor without a sensor. IEEE 14 bus 7 is one. Use `check_placement(grid, chosen, zib=True)`. How many sensors does the rule save?
-- **N-1 (every substation seen twice).** The grid stays fully visible if any one sensor fails. Use `check_placement(grid, chosen, n1=True)` and `ilp_placement(grid, twice=True)`. For QAOA, add a penalty for each substation seen only once.
+- **N-1 (every substation seen twice).** The grid stays fully visible if any one sensor fails. Use `check_placement(grid, chosen, n1=True)` and `ilp_placement(grid, twice=True)`. For QAOA, penalize each missing sighting: P × (2 − sightings) for a substation seen fewer than twice, with P > 1. (A flat penalty for "seen only once" lets invalid placements tie for best.)
 - **Fixed budget.** With only *k* sensors (try k = 2 or 3 on IEEE 14), place them to see as many substations as possible. This is the second goal in NERC's guideline. How does the cost function change when you can't afford full coverage?
-- **Priority weights.** Some substations matter more, such as big loads, power plants and the links between regions. Build a small priority table the way NERC's guideline suggests (a weight per application, times whether a PMU at that bus serves it), then give high-priority buses a bigger penalty or require them to be seen twice. See how the placement changes.
+- **Priority weights.** Some substations matter more, such as big loads, power plants and the links between regions. Build a small priority table the way NERC's guideline suggests (a weight per application, times whether a PMU at that bus serves it), then use the weights where they can matter: with a fixed budget (k sensors, maximize the weighted substations seen), or by requiring high-priority substations to be seen twice. (A bigger penalty alone won't move the best placement when every substation can be covered.) See how the placement changes.
 - **30 substations on qBraid's GPU simulator.** Load `data/ieee30.json`. The exact table of 2^30 costs no longer fits in memory, so switch to sampled shots.
 
 ## Honest quantum value
@@ -91,6 +91,7 @@ Judges reward teams that say plainly where quantum stands, with their own number
 
 - How long does your integer program take on 14 substations, and on 30? How long does QAOA take, including the hardware queue?
 - How often does QAOA find a best placement, and how often does it leave a substation unseen? How does that compare with guessing at random?
+- To tune QAOA, the notebook computes the cost of every placement first. What does that mean for your speed comparison?
 - What would have to change, in the hardware or in the problem, for quantum to be worth it here?
 
 Reading: Jones et al. 2020 ([arXiv 2001.04489](https://arxiv.org/abs/2001.04489)) tried a D-Wave quantum annealer on this problem for grids of several sizes. What did they find, and does your result agree?
@@ -100,8 +101,8 @@ Reading: Jones et al. 2020 ([arXiv 2001.04489](https://arxiv.org/abs/2001.04489)
 - MATPOWER IEEE 14-bus case: <https://github.com/MATPOWER/matpower/blob/master/data/case14.m>
 - MATPOWER IEEE 30-bus case: <https://github.com/MATPOWER/matpower/blob/master/data/case_ieee30.m>
 - UW Power Systems Test Case Archive (the original IEEE cases): <https://labs.ece.uw.edu/pstca/>
-- Background reading from TVA: NERC's *Reliability Guideline: PMU Placement and Installation* (December 2016), in [`original/`](./original/)
-- TVA's original problem and what changed for this event: [`original/`](./original/)
+- Background reading from TVA: NERC's *Reliability Guideline: PMU Placement and Installation* (December 2016), in [`background/`](./background/)
+- TVA's original problem, in TVA's words, and what changed for this event: [`background/`](./background/)
 - Data sources TVA pointed to:
   - an [IEEE overview of PMU placement](https://ieeexplore.ieee.org/document/7459248)
   - [IEEE 14-bus PMU measurements at optimal and sub-optimal locations](https://ieee-dataport.org/documents/pmu-measurements-optimal-sub-optimal-locations-ieee-14-bus-system) (IEEE DataPort)
