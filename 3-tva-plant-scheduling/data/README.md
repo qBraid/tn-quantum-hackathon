@@ -24,9 +24,9 @@ Files used:
 | `plant_id`, `type` | Our short name and a plain description | |
 | `rts_gen_uid` | The RTS-GMLC unit it came from | `GEN UID` |
 | `pmin_mw`, `pmax_mw` | Output range when on | `PMin MW`, `PMax MW`, then scaled (below) |
-| `marginal_cost_per_mwh` | $ per extra MWh | Average of the three incremental heat-rate segments (`HR_incr_1..3`, weighted by segment size) × `Fuel Price $/MMBTU` / 1000, plus `VOM` (0 for these units) |
-| `no_load_cost_per_h` | $ per hour of just being on | Cost at pmin (`HR_avg_0` × pmin × fuel price / 1000) minus marginal cost × pmin. Together these give a straight-line cost: no-load + marginal × MW |
-| `startup_cost` | $ per start | `Start Heat Cold MBTU` × fuel price + `Non Fuel Start Cost $` (cold start, to keep one number per plant) |
+| `marginal_cost_per_mwh` | Dollars per extra MWh | Average of the three incremental heat-rate segments (`HR_incr_1..3`, weighted by segment size) × `Fuel Price $/MMBTU` / 1000, plus `VOM` (0 for these units) |
+| `no_load_cost_per_h` | Dollars per hour of just being on | Cost at pmin (`HR_avg_0` × pmin × fuel price / 1000) minus marginal cost × pmin. Together these give a straight-line cost: no-load + marginal × MW |
+| `startup_cost` | Dollars per start | `Start Heat Cold MBTU` × fuel price + `Non Fuel Start Cost $` (cold start, to keep one number per plant) |
 | `min_up_h`, `min_down_h` | Hours a plant must stay on / off after switching | `Min Up Time Hr`, `Min Down Time Hr`, rounded up to whole hours |
 | `ramp_mw_per_h` | Largest output change in one hour | `Ramp Rate MW/Min` × 60 (used only in the ramp stretch goal) |
 | `on_at_start` | 1 if running at midnight | Our choice: COAL (and COAL_MID in the 10-plant set). Every plant is assumed to have been in its midnight state long enough to switch freely. |

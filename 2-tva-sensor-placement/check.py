@@ -90,7 +90,8 @@ def check_placement(grid, chosen, zib=False, n1=False, show=True, compare=False)
       sensors         how many sensors you used
       unseen          buses no sensor sees
       coverage        share of buses seen (1.0 is full observability)
-      redundancy      total sightings: for each bus, how many sensors see it, summed (higher is sturdier)
+      redundancy      total sightings: for each bus, how many sensors see it, summed. More usually means
+                      sturdier, but not always: use breaks_if_lost to judge robustness
       breaks_if_lost  sensors whose failure leaves some bus unseen (None if a bus is already unseen)
       best, gap       only with compare=True, for grids of 20 buses or fewer: the fewest sensors
                       possible, and sensors - best. Off by default: work out the fewest yourself first.

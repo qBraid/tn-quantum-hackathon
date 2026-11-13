@@ -4,6 +4,9 @@
 |---|---|---|---|
 | `ieee14.json` | 14 | 20 | MATPOWER [`case14.m`](https://github.com/MATPOWER/matpower/blob/master/data/case14.m) |
 | `ieee30.json` | 30 | 41 | MATPOWER [`case_ieee30.m`](https://github.com/MATPOWER/matpower/blob/master/data/case_ieee30.m) |
+| `ieee57.json` | 57 | 78 | MATPOWER [`case57.m`](https://github.com/MATPOWER/matpower/blob/master/data/case57.m) |
+| `ieee118.json` | 118 | 179 | MATPOWER [`case118.m`](https://github.com/MATPOWER/matpower/blob/master/data/case118.m) |
+| `ieee300.json` | 300 | 409 | MATPOWER [`case300.m`](https://github.com/MATPOWER/matpower/blob/master/data/case300.m) |
 | `ieee14_piece6.json` | 6 | 5 | cut from `ieee14.json` |
 
 ## Fields
@@ -20,7 +23,7 @@
 
 ## How the files were made
 
-The MATPOWER `.m` files were downloaded from GitHub (master branch) on Nov 3, 2026 and converted with a short parser:
+The MATPOWER `.m` files were downloaded from GitHub (master branch) on Nov 3, 2026 (the 57-, 118- and 300-bus files on Nov 12) and converted with a short parser:
 
 - **Lines:** in-service branches only (status 1). Parallel lines between the same two buses are merged into one, since a PMU sees through either. Transformers count as lines.
 - **Zero-injection buses:** load `Pd = Qd = 0`, shunt `Gs = Bs = 0`, and no in-service generator. (IEEE 14 bus 8 has no load but has a synchronous condenser, so it does not count.)
@@ -30,6 +33,6 @@ The IEEE 30-bus file uses `case_ieee30.m`, the original IEEE case. MATPOWER's `c
 
 ## License
 
-The IEEE 14-bus and 30-bus systems are public test cases from the University of Washington Power Systems Test Case Archive: <https://labs.ece.uw.edu/pstca/>. MATPOWER converted them from the archive's IEEE Common Data Format files.
+The IEEE 14-, 30-, 57-, 118- and 300-bus systems are public test cases from the University of Washington Power Systems Test Case Archive: <https://labs.ece.uw.edu/pstca/>. MATPOWER converted them from the archive's IEEE Common Data Format files.
 
-MATPOWER's code is under the BSD 3-Clause license (Copyright (c) 1996-2025, Power Systems Engineering Research Center (PSERC) and individual contributors). Its license notes that the case files themselves are not covered by the BSD license; these two were converted from the public source above.
+MATPOWER's code is under the BSD 3-Clause license (Copyright (c) 1996-2025, Power Systems Engineering Research Center (PSERC) and individual contributors). Its license notes that the case files themselves are not covered by the BSD license; these were converted from the public source above.

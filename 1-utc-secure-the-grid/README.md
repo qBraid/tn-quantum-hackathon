@@ -4,11 +4,11 @@
 
 A city-scale utility like Chattanooga's EPB runs a fiber network linking its substations and control centers. Two threats hang over it. Someone could be listening on a link right now. And an attacker could record encrypted traffic today and decrypt it years from now on a quantum computer. This track takes you through both, one step at a time, and ends with your design for the whole network.
 
-These problems come from UTC (Problems 1, 3, 4 and 6 of its problem set).
+These problems come from UTC (Problems 1, 3, 4 and 6 of its problem set). UTC's original problem set is in [`background/`](./background/), with a note on what changed.
 
 ## Start here
 
-1. Open [`1_bb84_eavesdropper.ipynb`](./1_bb84_eavesdropper.ipynb) with the qBraid SDK environment's kernel and run the cells.
+1. Open [`1_bb84_eavesdropper.ipynb`](./1_bb84_eavesdropper.ipynb) with the **qBraid-SDK (v0.12.2)** kernel (pick it in the Select Kernel box) and run the cells.
 2. Fill in the `TODO`s. Each one has a hint.
 3. Split the team. Steps 1 and 2 don't depend on each other, so some of you can work on BB84 while others take Shor and Grover, and someone starts the written Parts. Step 3 brings it all together.
 
@@ -25,9 +25,9 @@ Two substations need a shared secret key to encrypt the data between them. Quant
 
 - **Part 1. Shared key, no eavesdropper.** Run BB84 on the simulator and show both parties end up with matching keys, with near-zero error.
 - **Part 2. Add the eavesdropper.** Add an eavesdropper who intercepts each qubit and resends it. Report the error rate (QBER) with and without the eavesdropper, and show the jump.
-- **Part 3. Hardware and thresholds.** Run the protocol on real hardware and report the error rate from hardware noise alone. The notebook packs 16 rounds into one circuit, so this is **one job**, not one job per qubit. Then answer in a few sentences: how should a utility set a threshold that separates a real eavesdropper from normal line noise? (IonQ's noisy simulator shows almost no errors on BB84, because BB84 has no two-qubit gates. The error rate from hardware noise has to come from the real QPU.)
-- **Part 4. Why physics wins (written).** In one short paragraph, explain why BB84's security comes from physics, and what classical key exchange can't match.
-- **Stretch.** Run your protocol on two different simulator backends through qBraid and show the error rate is consistent. Ask a qBraid mentor which second simulator is free.
+- **Part 3. Hardware and thresholds.** Run the protocol on real hardware and report the error rate from hardware noise alone. The notebook packs 16 rounds into one circuit, so this is **one job**, not one job per qubit. Then answer in a few sentences: how should a utility decide when to throw a key away? Try it first: let Eve intercept only a fraction of the qubits and plot the error rate against that fraction. Could a careful spy hide inside normal line noise? The error rate you measured comes from gates and readout on a quantum computer, standing in for a fiber link's line noise. Look up how real QKD systems handle this (privacy amplification, and the error rate above which BB84 gives up). (IonQ's noisy simulator shows almost no errors on BB84, because BB84 has no two-qubit gates. For a free noise baseline, run the same circuit on Quantinuum's H2 emulator, which models readout error: the notebook has the lines. Then compare it with your real QPU run.)
+- **Part 4. What physics buys, and what it doesn't (written).** In one short paragraph, explain why BB84's secrecy comes from physics, and what classical key exchange can't match. Then say what BB84 still needs from classical cryptography (how do the two substations know they're talking to each other, not to an impostor?), and where real QKD systems have been attacked. Look up NSA's and the UK NCSC's published positions on QKD.
+- **Stretch.** Run your batched circuit on qBraid's free backends, IonQ's simulator, Quantinuum's H2 emulator and qBraid's own noise-free QIR simulator, and compare their error rates. They won't match: explain why, and what that means for your alarm threshold. On the emulator you can also run more rounds (16 to 31, 32 to 47, and so on) for a steadier estimate.
 - **Stretch, from the warm-up.** Use the warm-up's quantum random number generator ([`qrng_randomness.ipynb`](https://github.com/qBraid/tn-quantum-hackathon-warmup/blob/main/qrng_randomness.ipynb), in the warm-up repo) to make Alice's bits and bases, so the key's randomness comes from physics too. How does that change what an attacker could predict?
 
 ## Step 2: Size up the threat (Shor's algorithm and post-quantum cryptography)
@@ -37,32 +37,48 @@ Much of today's security, including the grid's, relies on RSA and elliptic-curve
 - **Part 1. Shor demo.** Run Shor's algorithm to factor 15 on the simulator. Report the factors, plus a sentence or two on what Shor's algorithm threatens.
 - **Part 2. Hardware gap.** The notebook lists qBraid's real quantum computers. Record their qubit counts, estimate the order of magnitude of qubits needed to break RSA-2048, and state how big the gap is today.
 - **Part 3. Exposure map (written).** List the utility systems that rely on RSA or elliptic-curve cryptography, and so are exposed. Consider SCADA control links, remote-access VPNs and firmware-update signing.
-- **Part 4. Migration plan (written).** Propose a move to NIST's post-quantum standards: [ML-KEM (FIPS 203)](https://csrc.nist.gov/pubs/fips/203/final) for key exchange and [ML-DSA (FIPS 204)](https://csrc.nist.gov/pubs/fips/204/final) for signatures. Rank what the utility should fix first, and explain why.
-- **Part 5. Grover and symmetric keys.** Shor's algorithm breaks public-key encryption. Grover's search attacks symmetric encryption such as AES, because it searches keys in about the square root of the time. Build it in [`2b_grover_symmetric_keys.ipynb`](./2b_grover_symmetric_keys.ipynb), where the marked item stands in for the secret key, and run it for N = 4 and 8 on the simulator (N = 16 and the IonQ run are optional). Then answer in a few sentences: what key length should the utility use for symmetric encryption, and why is that easier to fix than RSA? Fold it into your migration plan.
+- **Part 4. Migration plan (written).** Propose a move to NIST's post-quantum standards: [ML-KEM (FIPS 203)](https://csrc.nist.gov/pubs/fips/203/final) for key establishment and [ML-DSA (FIPS 204)](https://csrc.nist.gov/pubs/fips/204/final) for signatures. For firmware signing, also look at hash-based signatures (NIST SP 800-208 and FIPS 205). NIST IR 8547 sets NIST's timeline for retiring RSA and elliptic-curve cryptography: cite it. Rank what the utility should fix first, and explain why.
+- **Part 5. Grover and symmetric keys.** Shor's algorithm breaks public-key encryption. Grover's search attacks symmetric encryption such as AES: it finds a key in about √N quantum steps instead of N guesses. But each step is a full AES computation on an error-corrected quantum computer, and the steps can't be split across many machines the way classical guessing can. Build it in [`2b_grover_symmetric_keys.ipynb`](./2b_grover_symmetric_keys.ipynb), where the marked item stands in for the secret key, and run it for N = 4 and 8 on the simulator (N = 16 and the IonQ run are optional). Then answer in a few sentences: what key length should the utility use for symmetric encryption, and is fixing it more or less urgent than RSA, and harder or easier? Why? Check what NIST's post-quantum FAQ says about AES-128 before you answer. Fold it into your migration plan.
 - **Stretch.** Identify systems that are hard to patch, such as field devices with long lifespans, and explain why they need attention now.
 
 ## Step 3: Design the network (capstone)
 
-Now put it together. Securing a metro-scale grid network takes more than one tool. Some links may use QKD, others post-quantum cryptography (PQC). The right mix depends on distance, cost, the number of sites and hard practical limits.
+Now put it together. Securing a metro-scale grid network takes more than one tool. Some links may use QKD, others post-quantum cryptography (PQC). The right mix depends on distance, cost, the number of sites and hard practical limits. No network is provided: choose one to design for (a small one is fine, for example 2 control centers and 6 to 10 substations, with link lengths), and say where your numbers come from.
 
-- **Part 1. Architecture.** A diagram and a written rationale showing where you use QKD and where PQC, and why. Address distance limits, the number of substations, the "trusted node" problem on long QKD links, and timing synchronization across sites.
-- **Part 2. Assumptions and tradeoffs.** List your key assumptions and tradeoffs. Use qBraid's device list for quantum-computer numbers (qubit counts, prices), and cite a source for QKD limits such as distance and key rate.
+- **Part 1. Architecture.** A diagram and a written rationale showing where you use QKD and where PQC, and why. Address distance limits, the number of substations, the "trusted node" problem on long QKD links, and timing synchronization across sites (the sites must agree on time for QKD to work).
+- **Part 2. Assumptions and tradeoffs.** List your key assumptions and tradeoffs. Cite a source for QKD limits such as distance, key rate and cost. A good start: the field test of three QKD systems on EPB's own fiber, in [Links](#links). qBraid's device list tells you about quantum computers, not QKD equipment.
 - **Part 3. Working prototype.** Build and run one link on qBraid: reuse your BB84 from Step 1, or finish the teleportation link in the notebook (its last cell runs it on IonQ's free simulator).
 - **Part 4. Rollout plan.** A phased plan: what the utility deploys first, next and later, and why.
-- **Stretch.** A short cost-versus-security argument aimed at the utility's board.
+- **Part 5. Cost versus security.** A short argument for the utility's board: what your design costs, what it protects, and what a cheaper option leaves exposed. Cite real prices where you find them, and say which numbers are guesses.
 - **Stretch.** Use QAOA to choose which links get quantum keys under a fixed budget, and compare it with a classical choice. The TVA tracks' worked example, [`qaoa_primer.ipynb`](../2-tva-sensor-placement/qaoa_primer.ipynb), shows the pattern.
+
+## Step 4: Tell the story (your pitch deck)
+
+Judges score the deck. Build the five slides from the [main README](../README.md#what-judges-look-for) out of the Parts you've done, plus questions only your team can answer:
+
+| Slide | Build it from | Questions to answer yourselves |
+|---|---|---|
+| 1. Problem | Step 1, Part 2; Step 2, Parts 1 to 3 | Which of the utility's data or keys must stay secret for 10 years or more? Is the bigger risk someone reading old traffic, or someone forging a command or a firmware update later? |
+| 2. Customer | Step 2, Part 3 | What does a utility like EPB run on these links today (look up DNP3, IEC 61850 and VPNs), and how much of it is encrypted? How long do field devices stay in service? Who signs off on a change like this, and which rules apply (start with NERC CIP-005 and CIP-012)? |
+| 3. Solution | Step 3, Parts 1, 3 and 4 | Your network diagram, your working link, your rollout. |
+| 4. Value | Step 3, Part 5 | What does one QKD link cost (equipment, dedicated fiber, trusted nodes) next to a post-quantum software or firmware update? What does the utility get for the difference? |
+| 5. What we learned | Step 1, Parts 3 and 4; Step 2, Parts 2 and 5 | Where does quantum help this customer today, and where doesn't it? What failed, and why? |
+
+EPB has already tried this: the field test in [Links](#links) ran three QKD systems on an isolated part of EPB's fiber in Chattanooga. Read what worked and what was hard before you design yours.
 
 ## Hardware
 
 | Device | qBraid ID | Notes |
 |---|---|---|
-| IonQ simulator | `ionq:ionq:sim:simulator` | **Free.** Pass `runtime_options={"noise_model": "aria-1"}` to add IonQ's gate noise (see the notebooks' hardware cell) |
-| IonQ Forte | `ionq:ionq:qpu:forte-1` | Real QPU. Uses credits |
-| Quantinuum emulators | `quantinuum:quantinuum:sim:h2-emulator` (also `h2-1le`, `h1-emulator`, `h1-1le`) | Emulators that model Quantinuum's hardware, not the real machine; check the price in the device catalog. Accept Quantinuum's terms once on the Quantinuum page under Devices (you'll see a prompt); until you accept, jobs are refused. Your real-hardware run is on IonQ Forte |
+| IonQ simulator | `ionq:ionq:sim:simulator` | **Free.** Pass `runtime_options={"noise_model": "forte-1"}` to add an approximate model of IonQ Forte's gate noise. BB84 uses `"aria-1"`: its 16-qubit runs on `forte-1` waited about 10 minutes in IonQ's queue |
+| IonQ Forte | `ionq:ionq:qpu:forte-1` | Real QPU. Uses credits. If it shows as unavailable, use the same machine through AWS: `aws:ionq:qpu:forte-1`, about 1,630 credits for 200 shots |
+| Quantinuum emulators | `quantinuum:quantinuum:sim:h2-emulator` (also `h2-1le`, `h1-emulator`, `h1-1le`) | **Free.** Emulators that model Quantinuum's hardware, readout error included (IonQ's simulator has none), so they're the free way to see BB84's error rate from noise. Accept Quantinuum's terms once on the Quantinuum page under Devices; until you accept, jobs are refused. Label results as emulator, not hardware. Your real-hardware run is on IonQ Forte |
+| qBraid QIR simulator | `qbraid:qbraid:sim:qir-sv` | **Free.** qBraid's own simulator: noise-free, up to 30 qubits and 2,000 shots. Unlike Aer, each run is a job on your Jobs page. It can't apply gates after a measurement, so measure at the end |
+| Rigetti Cepheus | `aws:rigetti:qpu:cepheus-1-108q` | The cheapest real QPU, about 40 credits for 200 shots. Fine for BB84, which has no two-qubit gates. Ask a qBraid mentor first |
 | IQM Garnet | `aws:iqm:qpu:garnet` | Backup if IonQ is down or its queue isn't moving. Ask a qBraid mentor first |
 
 Rules:
-- Get it right on a simulator first.
+- Get it right on a simulator first. The notebooks use Aer (Qiskit's simulator, running inside your Lab instance: instant and free, but its runs don't reach your Jobs page).
 - Cap each hardware run at 200 shots, and plan on one hardware run for each Part that asks for one (UTC's guidance). Simulators are free and unlimited.
 - Send hardware runs early: queues can take hours, so aim for Saturday, not Sunday morning.
 - Write down every job ID.
@@ -77,7 +93,11 @@ On Sunday morning, you present your pitch deck to this track's judges. They look
 
 A design that uses only post-quantum cryptography can score just as well as one with QKD everywhere, if you justify it. Code counts less than understanding and clarity. See the [main README](../README.md#what-judges-look-for).
 
-**Due Sunday 9:00 AM:** your pitch deck and your code as a ZIP ([what to submit, and where](../README.md#what-to-submit)). Have your notebooks, any tools you built, your hardware job IDs, and your written answers to each Part in a `WRITEUP.md` file in this folder (it goes in your ZIP), labeled by step and Part (for example, "Step 1, Part 3").
+**Due Sunday 9:00 AM:** your pitch deck, and a ZIP of this folder (see "What to submit" in the [main README](../README.md#what-to-submit)). The ZIP holds:
+- your notebooks, run, with their outputs, and any tools you built;
+- `WRITEUP.md`, a text file you create in this folder: your answer to each Part, labeled by step and Part (for example, "Step 1, Part 3"), and your run record (device, job ID, shots and status for every cloud run).
+
+Judges score the deck. `WRITEUP.md` backs up what your slides claim, so keep each answer to a few sentences and its sources.
 
 **The notebooks are starters.** Add your own code, cells and notebooks, and expand as far as you like. The stretch goals above show some ways to bring in ideas from the warm-up and the other tracks.
 
@@ -91,6 +111,8 @@ Also open to your team: the [qBraid Award](../4-qbraid-award) for the most creat
 
 ## Links
 
+- UTC's original problem set and what changed: [`background/`](./background/)
 - [qBraid device catalog](https://account.qbraid.com/devices) (qubit counts, prices, status)
-- [NIST post-quantum cryptography](https://csrc.nist.gov/projects/post-quantum-cryptography)
+- [NIST post-quantum cryptography](https://csrc.nist.gov/projects/post-quantum-cryptography), and its [FAQ](https://csrc.nist.gov/projects/post-quantum-cryptography/faqs) (including what Grover's search means for AES)
+- Evans et al., ["Trusted Node QKD at an Electrical Utility"](https://arxiv.org/abs/2103.09877), IEEE Access, 2021: a field test of three QKD systems on an electric utility's fiber network (distance, key rate, trusted nodes)
 - [EPB Quantum Network](https://quantum.epb.com) (Chattanooga's commercial quantum network)
